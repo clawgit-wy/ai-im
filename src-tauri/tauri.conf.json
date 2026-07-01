@@ -1,0 +1,42 @@
+{
+  "productName": "AI-IM",
+  "version": "0.1.0",
+  "identifier": "com.ai-im.app",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:6130"
+  },
+  "bundle": {
+    "createUpdaterArtifacts": true,
+    "active": true,
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.ico",
+      "icons/icon.icns"
+    ],
+    "windows": {},
+    "macOS": {}
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [],
+    "security": {
+      "csp": null
+    },
+    "macOSPrivateApi": true
+  },
+  "plugins": {
+    "updater": {
+      "active": true,
+      "windows": {
+        "installMode": "passive"
+      },
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IFJFUExBQ0VfV0lUSF9BVFRBQ0hFRF9QVVBMSUNfS0VZCg==",
+      "endpoints": [
+        "https://github.com/your-org/ai-im/releases/latest/download/latest.json"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+// PingFang 为 macOS 系统内置字体，无需 @font-face 加载。
+// 之前的 @font-face 引用了不存在的 /src/assets/fonts/PingFang Medium.ttf，
+// 导致 Vite 返回非字体内容触发 "OTS parsing error: invalid sfntVersion"。
+// 此处仅声明字体族名回退栈，由系统字体提供。
+$pingfang-font-stack: 'PingFang SC', 'PingFang', -apple-system, BlinkMacSystemFont,
+  'Helvetica Neue', 'Microsoft YaHei', sans-serif;

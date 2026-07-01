@@ -1,0 +1,51 @@
+[package]
+name = "ai-im"
+version = "0.1.0"
+description = "AI-IM 桌面即时通讯应用"
+authors = ["AI-IM"]
+license = ""
+repository = ""
+edition = "2021"
+
+[profile.release]
+panic = "abort" # 去掉昂贵的恐慌清理逻辑
+codegen-units = 1 # 一个接一个地编译包,这样编译器可以更好地优化
+lto = true # 启用链接时优化
+opt-level = "s" # 优化二进制文件大小,且不会太大消耗性能 ("z" 极致优化大小但会消耗性能)
+strip = true # 删除调试符号
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "2.0.2", features = [] }
+
+[dependencies]
+tauri = { version = "2.0.6", features = ["macos-private-api", "tray-icon", "image-png"] }
+tauri-plugin-os = "2.0.1"
+tauri-plugin-shell = "2.0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-websocket = "2.0.1"
+tauri-plugin-http = { version = "2.0.1", features = ["unsafe-headers"] }
+tauri-plugin-process = "2.0.1"
+tauri-plugin-fs = "2.0.1"
+tauri-plugin-dialog = "2.0.1"
+tauri-plugin-upload = "2.0.1"
+tauri-plugin-global-shortcut = "2.0.1"
+tauri-plugin-clipboard-manager = "2.0.1"
+tauri-plugin-updater = "2"
+
+[target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
+tauri-plugin-autostart = "2.0.1"
+lazy_static = "1.4"
+screenshots = "0.5.4"
+base64 = "0.22.1"
+rodio = "0.17.3"
+
+[features]
+# 默认 Tauri 以生产模式运行
+# 当 `tauri dev` 运行时,如果 devPath 是 URL,则使用 `cargo run --no-default-features` 执行
+default = ["custom-protocol"]
+# 此特性用于 devPath 指向文件系统的生产构建
+# 请勿移除
+custom-protocol = ["tauri/custom-protocol"]
