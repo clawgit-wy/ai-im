@@ -85,7 +85,7 @@ export const useCommon = () => {
     const { selection, range } = getEditorRange()!
     // 删除选中的内容
     range?.deleteContents()
-    if (type === MsgEnum.AIT) {
+    if (type === (MsgEnum as any).AIT) {
       // 创建一个span标签节点
       const spanNode = document.createElement('span')
       spanNode.id = 'aitSpan'

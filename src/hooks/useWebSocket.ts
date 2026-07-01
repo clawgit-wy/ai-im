@@ -1,6 +1,5 @@
 import { ref, onUnmounted } from 'vue'
 import { computedToken } from '@/services/http'
-import { MsgEnum } from '@/enums'
 import Mitt from '@/utils/Bus'
 import { MittEnum } from '@/enums'
 import type { MessageType } from '@/services/types'

@@ -1,8 +1,7 @@
 import { ref, reactive } from 'vue'
 import { defineStore } from 'pinia'
-import { StoresEnum, ChatTypeEnum, MsgEnum } from '@/enums'
+import { StoresEnum, MsgEnum } from '@/enums'
 import apis from '@/services/apis'
-import { computedToken } from '@/services/http'
 import type { Session, MessageType, GroupMember, SendMsgReq } from '@/services/types'
 
 export const useChatStore = defineStore(StoresEnum.CHAT, () => {

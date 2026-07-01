@@ -10,7 +10,7 @@
       <!-- 列表区域 -->
       <n-scrollbar class="flex-1">
         <div
-          v-for="(item, index) in filteredWorkflowList"
+          v-for="item in filteredWorkflowList"
           :key="item.id"
           :class="['list-item', { active: activeRobotId === item.id }]"
           @click="activeRobotId = item.id">

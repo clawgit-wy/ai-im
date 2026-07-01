@@ -7,7 +7,6 @@ import type {
   ListResponse,
   LoginReq,
   LoginRes,
-  Message,
   MessageType,
   Plugin,
   PluginReq,

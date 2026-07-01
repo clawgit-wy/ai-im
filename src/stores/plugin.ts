@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { StoresEnum, PluginStatusEnum } from '@/enums'
+import { StoresEnum } from '@/enums'
 import apis from '@/services/apis'
 import type { Plugin } from '@/services/types'
 

@@ -92,7 +92,7 @@ type FilterType = 'all' | 'single' | 'group'
 
 defineOptions({ name: 'ChatList' })
 
-const props = defineProps<{
+defineProps<{
   /** 对话列表数据 */
   list: ChatItem[]
   /** 当前选中的对话ID */

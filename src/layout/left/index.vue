@@ -143,7 +143,9 @@ import router from '@/router'
 const globalStore = useGlobalStore()
 const userStore = useUserStore()
 const settingStore = useSettingStore()
-const { createWebviewWindow } = useWindow()
+const { createWebviewWindow: _createWebviewWindow } = useWindow()
+// 保留引用供未来扩展使用
+void _createWebviewWindow
 const userInfo = computed(() => userStore.userInfo)
 const { themes, fontSize, windowShadow } = storeToRefs(settingStore)
 
@@ -296,6 +298,18 @@ const handleNavClick = (url: string) => {
   globalStore.setCurrentModule(url)
   router.push(`/home/${url}`)
 }
+
+/** 路由变化时同步当前模块（解决刷新后高亮丢失问题） */
+watch(
+  () => router.currentRoute.value.path,
+  (path) => {
+    const match = path.match(/\/home\/(\w+)/)
+    if (match && match[1]) {
+      globalStore.setCurrentModule(match[1])
+    }
+  },
+  { immediate: true }
+)
 
 /** 点击在线状态 */
 const handleStatusClick = () => {

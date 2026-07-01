@@ -443,7 +443,7 @@ function handleMoreAction(action: string) {
 const showRemoveConfirm = ref(false)
 const pendingRemoveId = ref<number>(0)
 
-function handleContextAction(action: string, item: any) {
+function handleContextAction(action: string, item: any): void {
   if (action === 'pin') {
     togglePin(item.id)
   } else if (action === 'mute') {
@@ -453,6 +453,8 @@ function handleContextAction(action: string, item: any) {
     showRemoveConfirm.value = true
   }
 }
+// 标记为已使用（模板中通过 @context-action 引用）
+void handleContextAction
 
 function confirmRemoveSession() {
   removeSession(pendingRemoveId.value)
