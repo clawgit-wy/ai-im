@@ -6,7 +6,7 @@
         v-for="tab in filterTabs"
         :key="tab.value"
         class="filter-tab"
-        :class="{ active: currentFilterValue === tab.value }"
+        :class="{ active: currentFilter === tab.value }"
         @click="handleFilter(tab.value)">
         {{ tab.label }}
       </div>
@@ -35,8 +35,9 @@
         v-for="item in list"
         :key="item.id"
         class="list-item"
-        :class="{ active: item.id === currentId }"
-        @click="emit('select', item.id)">
+        :class="{ active: item.id === currentId, pinned: item.pinned, muted: item.muted }"
+        @click="emit('select', item.id)"
+        @contextmenu.prevent="handleContextMenu($event, item)">
         <!-- 头像 -->
         <div
           class="list-avatar"
@@ -48,9 +49,11 @@
         <!-- 内容 -->
         <div class="list-content">
           <div class="list-title-row">
+            <span v-if="item.pinned" class="pin-icon">📌</span>
             <span class="list-title">{{ item.name }}</span>
             <span v-if="item.type === 'group'" class="chat-type-badge group">群</span>
             <span v-if="item.aiEnabled" class="chat-type-badge ai">AI</span>
+            <span v-if="item.muted" class="mute-icon">🔕</span>
           </div>
           <div class="list-subtitle">{{ item.lastMsg }}</div>
         </div>
@@ -58,7 +61,7 @@
         <!-- 元信息 -->
         <div class="list-meta">
           <span class="list-time">{{ item.time }}</span>
-          <n-badge v-if="item.unread > 0" :value="item.unread" :max="99" type="error" />
+          <n-badge v-if="item.unread > 0 && !item.muted" :value="item.unread" :max="99" type="error" />
         </div>
       </div>
 
@@ -68,6 +71,17 @@
         <p class="text-12px opacity-50 mt-8px">暂无对话</p>
       </div>
     </div>
+
+    <!-- 右键菜单 -->
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :x="contextMenuX"
+      :y="contextMenuY"
+      :options="contextMenuOptions"
+      :show="showContextMenu"
+      :on-clickoutside="closeContextMenu"
+      @select="handleContextAction" />
   </div>
 </template>
 
@@ -92,6 +106,7 @@ const emit = defineEmits<{
   filter: [type: FilterType]
   search: [keyword: string]
   add: []
+  contextAction: [action: string, item: ChatItem]
 }>()
 
 const filterTabs = [
@@ -100,20 +115,62 @@ const filterTabs = [
   { label: '群组', value: 'group' as FilterType }
 ]
 
-const currentFilterValue = ref<FilterType>(props.currentFilter)
 const searchValue = ref('')
-
-watch(() => props.currentFilter, (val) => {
-  currentFilterValue.value = val
-})
 
 watch(searchValue, (val) => {
   emit('search', val)
 })
 
+/** 筛选切换 - 直接使用props值，避免本地状态同步延迟 */
 function handleFilter(type: FilterType) {
-  currentFilterValue.value = type
   emit('filter', type)
+}
+
+/** 右键菜单状态 */
+const showContextMenu = ref(false)
+const contextMenuX = ref(0)
+const contextMenuY = ref(0)
+const contextItem = ref<ChatItem | null>(null)
+
+const contextMenuOptions = computed(() => {
+  if (!contextItem.value) return []
+  return [
+    {
+      label: contextItem.value.pinned ? '取消置顶' : '置顶对话',
+      key: 'pin',
+      icon: () => '📌'
+    },
+    {
+      label: contextItem.value.muted ? '取消免打扰' : '消息免打扰',
+      key: 'mute',
+      icon: () => '🔕'
+    },
+    { type: 'divider', key: 'd1' },
+    {
+      label: '移除会话',
+      key: 'remove',
+      icon: () => '🗑️'
+    }
+  ]
+})
+
+function handleContextMenu(e: MouseEvent, item: ChatItem) {
+  contextItem.value = item
+  contextMenuX.value = e.clientX
+  contextMenuY.value = e.clientY
+  showContextMenu.value = true
+}
+
+function closeContextMenu() {
+  showContextMenu.value = false
+  contextItem.value = null
+}
+
+function handleContextAction(key: string) {
+  if (contextItem.value) {
+    emit('contextAction', key, contextItem.value)
+  }
+  closeContextMenu()
 }
 
 function avatarStyle(item: ChatItem) {
@@ -151,6 +208,7 @@ function avatarStyle(item: ChatItem) {
   transition: all 0.2s ease;
   flex: 1;
   text-align: center;
+  user-select: none;
 }
 
 .filter-tab:hover {
@@ -200,6 +258,12 @@ function avatarStyle(item: ChatItem) {
 
 .list-item.active {
   background: #f3f3f3;
+}
+
+.list-item.pinned {
+  background: rgba(19, 152, 127, 0.04);
+  border-left: 3px solid #13987f;
+  padding-left: 9px;
 }
 
 :global(html[data-theme='dark']) .list-item.active {
@@ -267,6 +331,17 @@ function avatarStyle(item: ChatItem) {
   align-items: center;
   gap: 4px;
   margin-bottom: 3px;
+}
+
+.pin-icon {
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.mute-icon {
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .list-title {

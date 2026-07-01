@@ -5,7 +5,6 @@
       <!-- 搜索栏 -->
       <div class="search-bar flex items-center gap-8px">
         <n-input v-model:value="searchKeyword" placeholder="搜索智能体..." clearable size="small" class="flex-1" />
-        <button class="add-btn" @click="openCreateModal">+</button>
       </div>
 
       <!-- 列表区域 -->

@@ -205,6 +205,11 @@
     <n-modal v-model:show="showLeaveConfirm" preset="dialog" title="退出群组" type="error" positive-text="退出" negative-text="取消" @positive-click="confirmLeaveGroup">
       <p>确定要退出此群组吗？退出后将不再接收群组消息。</p>
     </n-modal>
+
+    <!-- ========== 移除会话确认弹窗 ========== -->
+    <n-modal v-model:show="showRemoveConfirm" preset="dialog" title="移除会话" type="warning" positive-text="移除" negative-text="取消" @positive-click="confirmRemoveSession">
+      <p>确定要移除该会话吗？移除后将清空聊天记录。</p>
+    </n-modal>
   </div>
 </template>
 
@@ -244,7 +249,10 @@ const {
   addGroupAI,
   leaveGroup,
   clearMessages,
-  joinGroup
+  joinGroup,
+  togglePin,
+  toggleMute,
+  removeSession
 } = useChat()
 
 // 初始化：从后端加载会话列表
@@ -429,6 +437,26 @@ function handleMoreAction(action: string) {
     }
     window.$message?.info(messages[action] || '')
   }
+}
+
+/** 右键菜单操作 */
+const showRemoveConfirm = ref(false)
+const pendingRemoveId = ref<number>(0)
+
+function handleContextAction(action: string, item: any) {
+  if (action === 'pin') {
+    togglePin(item.id)
+  } else if (action === 'mute') {
+    toggleMute(item.id)
+  } else if (action === 'remove') {
+    pendingRemoveId.value = item.id
+    showRemoveConfirm.value = true
+  }
+}
+
+function confirmRemoveSession() {
+  removeSession(pendingRemoveId.value)
+  pendingRemoveId.value = 0
 }
 
 /** 成员头像样式 */

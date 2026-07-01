@@ -10,9 +10,6 @@
           clearable
           class="search-input"
         />
-        <n-button size="small" quaternary circle class="add-btn" @click="showInstallModal = true">
-          <span class="text-lg">+</span>
-        </n-button>
       </div>
 
       <div class="list-area">

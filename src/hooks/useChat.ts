@@ -22,6 +22,8 @@ export interface ChatItem {
   time: string
   unread: number
   memberCount?: number
+  pinned?: boolean
+  muted?: boolean
 }
 
 /** 聊天消息 */
@@ -561,6 +563,71 @@ export function useChat() {
     window.$message?.success('已发送加入请求')
   }
 
+  /**
+   * 置顶/取消置顶对话
+   * @param id 对话ID
+   */
+  function togglePin(id: number) {
+    const chat = chatList.value.find((c) => c.id === id)
+    if (chat) {
+      chat.pinned = !chat.pinned
+      // 置顶的对话排到前面
+      if (chat.pinned) {
+        const idx = chatList.value.findIndex((c) => c.id === id)
+        if (idx > -1) {
+          chatList.value.splice(idx, 1)
+          chatList.value.unshift(chat)
+        }
+        window.$message?.success(`已置顶 ${chat.name}`)
+      } else {
+        window.$message?.info(`已取消置顶 ${chat.name}`)
+      }
+    }
+  }
+
+  /**
+   * 消息免打扰
+   * @param id 对话ID
+   */
+  function toggleMute(id: number) {
+    const chat = chatList.value.find((c) => c.id === id)
+    if (chat) {
+      chat.muted = !chat.muted
+      if (chat.muted) {
+        chat.unread = 0
+        window.$message?.success(`已开启 ${chat.name} 的消息免打扰`)
+      } else {
+        window.$message?.info(`已关闭 ${chat.name} 的消息免打扰`)
+      }
+    }
+  }
+
+  /**
+   * 移除会话
+   * @param id 对话ID
+   */
+  async function removeSession(id: number) {
+    try {
+      await apis.deleteSession({ id })
+      const idx = chatList.value.findIndex((c) => c.id === id)
+      if (idx > -1) {
+        chatList.value.splice(idx, 1)
+      }
+      delete messagesMap[id]
+      delete groupMembersMap[id]
+      // 如果移除的是当前会话，切换到第一个
+      if (currentChatId.value === id) {
+        currentChatId.value = 0
+        if (chatList.value.length > 0) {
+          await selectChat(chatList.value[0].id)
+        }
+      }
+      window.$message?.success('会话已移除')
+    } catch (err) {
+      console.error('移除会话失败:', err)
+    }
+  }
+
   return {
     // 状态
     chatList,
@@ -596,6 +663,9 @@ export function useChat() {
     addGroupAI,
     leaveGroup,
     clearMessages,
-    joinGroup
+    joinGroup,
+    togglePin,
+    toggleMute,
+    removeSession
   }
 }
