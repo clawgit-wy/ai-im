@@ -50,12 +50,9 @@
               </template>
               清空
             </n-tooltip>
-            <n-tooltip trigger="hover">
-              <template #trigger>
-                <button class="action-btn" @click="showMoreOptions = true">⋯</button>
-              </template>
-              更多
-            </n-tooltip>
+            <n-dropdown trigger="click" :options="moreOptions" placement="bottom-end" @select="handleMoreSelect">
+              <button class="action-btn">⋯</button>
+            </n-dropdown>
           </div>
         </div>
 
@@ -177,23 +174,62 @@
       </div>
     </n-modal>
 
-    <!-- ========== 更多选项弹窗 ========== -->
-    <n-modal v-model:show="showMoreOptions" preset="card" title="更多选项" style="width: 300px; max-width: 90vw" :bordered="false">
-      <div class="more-options">
-        <div class="more-option-item" @click="handleMoreAction('pin')">
-          <span>📍</span><span>标记重要</span>
-        </div>
-        <div class="more-option-item" @click="handleMoreAction('export')">
-          <span>📤</span><span>导出对话</span>
-        </div>
-        <div class="more-option-item" @click="handleMoreAction('copy')">
-          <span>📋</span><span>复制对话</span>
-        </div>
-        <div v-if="currentChat?.type === 'group'" class="more-divider" />
-        <div v-if="currentChat?.type === 'group'" class="more-option-item" @click="handleMoreAction('join')">
-          <span>➕</span><span>加入群组</span>
-        </div>
-      </div>
+    <!-- ========== 设置弹窗 ========== -->
+    <n-modal v-model:show="showSettingsModal" preset="card" title="设置" style="width: 520px; max-width: 90vw" :bordered="false">
+      <n-tabs type="line" animated>
+        <!-- 外观设置 -->
+        <n-tab-pane name="appearance" tab="外观">
+          <div class="settings-section">
+            <div class="settings-item">
+              <span>主题模式</span>
+              <n-radio-group :value="themes.content" @update:value="handleThemeChange">
+                <n-radio value="light">浅色</n-radio>
+                <n-radio value="dark">深色</n-radio>
+                <n-radio value="os">跟随系统</n-radio>
+              </n-radio-group>
+            </div>
+            <div class="settings-item">
+              <span>字体大小</span>
+              <n-slider :value="fontSize" :min="12" :max="18" :step="1" style="width: 200px" :marks="{ 12: '小', 14: '默认', 18: '大' }" @update:value="handleFontSizeChange" />
+            </div>
+            <div class="settings-item">
+              <span>窗口阴影</span>
+              <n-switch :value="windowShadow" @update:value="handleWindowShadowChange" />
+            </div>
+          </div>
+        </n-tab-pane>
+
+        <!-- 对话设置 -->
+        <n-tab-pane name="chat" tab="对话">
+          <div class="settings-section">
+            <div class="settings-item">
+              <span>发送快捷键</span>
+              <n-radio-group :value="sendKey" @update:value="handleSendKeyChange">
+                <n-radio value="Enter">Enter 发送</n-radio>
+                <n-radio value="Ctrl+Enter">Ctrl+Enter 发送</n-radio>
+              </n-radio-group>
+            </div>
+            <div class="settings-item">
+              <span>消息通知</span>
+              <n-switch :value="notifyEnabled" @update:value="handleNotifyChange" />
+            </div>
+            <div class="settings-item">
+              <span>提示音</span>
+              <n-switch :value="soundEnabled" @update:value="handleSoundChange" />
+            </div>
+          </div>
+        </n-tab-pane>
+
+        <!-- 关于 -->
+        <n-tab-pane name="about" tab="关于">
+          <div class="about-content">
+            <div class="about-logo">🤖</div>
+            <h2 class="about-name">AI-IM</h2>
+            <p class="about-version">版本 0.1.0</p>
+            <p class="about-desc">基于 Tauri + Vue3 的智能助手桌面应用</p>
+          </div>
+        </n-tab-pane>
+      </n-tabs>
     </n-modal>
 
     <!-- ========== 清空对话确认弹窗 ========== -->
@@ -215,6 +251,7 @@
 
 <script setup lang="ts">
 import { useChat, aiAssistantOptions, type AIAssistantType, type Member } from '@/hooks/useChat'
+import { useSettingStore } from '@/stores/setting'
 import ChatList from './components/ChatList.vue'
 import ChatMessages from './components/ChatMessages.vue'
 import ChatInput from './components/ChatInput.vue'
@@ -222,6 +259,9 @@ import CreateGroupModal from './components/CreateGroupModal.vue'
 import MemberSidebar from './components/MemberSidebar.vue'
 
 defineOptions({ name: 'ChatPage' })
+
+const settingStore = useSettingStore()
+const { themes, fontSize, windowShadow, sendKey, notifyEnabled, soundEnabled } = storeToRefs(settingStore)
 
 const {
   currentChatId,
@@ -252,7 +292,10 @@ const {
   joinGroup,
   togglePin,
   toggleMute,
-  removeSession
+  removeSession,
+  exportChat,
+  copyChat,
+  changeFilter
 } = useChat()
 
 // 初始化：从后端加载会话列表
@@ -267,9 +310,9 @@ const chatInputRef = ref<InstanceType<typeof ChatInput>>()
 const showCreateMenuModal = ref(false)
 const showSelectContactModal = ref(false)
 const showAtMentionModal = ref(false)
-const showMoreOptions = ref(false)
 const showClearConfirm = ref(false)
 const showLeaveConfirm = ref(false)
+const showSettingsModal = ref(false)
 const joinGroupCode = ref('')
 const isMobileListHidden = ref(false)
 
@@ -326,9 +369,9 @@ function handleSelectChat(id: number) {
   }
 }
 
-/** 筛选 */
+/** 筛选 - 使用 changeFilter 自动同步当前选中对话 */
 function handleFilter(type: 'all' | 'single' | 'group') {
-  currentFilter.value = type
+  changeFilter(type)
 }
 
 /** 搜索 */
@@ -400,19 +443,19 @@ function confirmClearChat() {
   clearMessages()
 }
 
-/** 设置 */
+/** 设置 - 打开设置弹窗 */
 function handleSettings() {
-  window.$message?.info('对话设置')
+  showSettingsModal.value = true
 }
 
-/** 群组设置 */
+/** 群组设置 - 打开成员侧边栏 */
 function handleGroupSettings() {
-  window.$message?.info('群组设置')
+  showMemberSidebar.value = true
 }
 
 /** 管理群组AI */
 function handleManageAI() {
-  window.$message?.info('管理群组AI')
+  showAIAssistantBar.value = true
 }
 
 /** 退出群组 */
@@ -424,19 +467,91 @@ function confirmLeaveGroup() {
   leaveGroup()
 }
 
-/** 更多选项操作 */
-function handleMoreAction(action: string) {
-  showMoreOptions.value = false
-  if (action === 'join') {
-    showJoinGroupModal.value = true
-  } else {
-    const messages: Record<string, string> = {
-      pin: '标记重要',
-      export: '导出对话',
-      copy: '复制对话'
+/** 更多按钮下拉菜单选项 */
+const moreOptions = computed(() => {
+  const opts: any[] = [
+    {
+      label: currentChat.value?.pinned ? '取消置顶' : '置顶对话',
+      key: 'pin',
+      icon: () => '📌'
+    },
+    {
+      label: '导出对话',
+      key: 'export',
+      icon: () => '📤'
+    },
+    {
+      label: '复制对话',
+      key: 'copy',
+      icon: () => '📋'
+    },
+    { type: 'divider', key: 'd1' },
+    {
+      label: '清空消息',
+      key: 'clear',
+      icon: () => '🗑️'
     }
-    window.$message?.info(messages[action] || '')
+  ]
+  // 群组对话额外选项
+  if (currentChat.value?.type === 'group') {
+    opts.push({ type: 'divider', key: 'd2' })
+    opts.push({
+      label: '群组设置',
+      key: 'groupSettings',
+      icon: () => '⚙️'
+    })
+    opts.push({
+      label: '退出群组',
+      key: 'leave',
+      icon: () => '🚪'
+    })
   }
+  return opts
+})
+
+/** 更多菜单选择处理 */
+function handleMoreSelect(key: string) {
+  const chatId = currentChatId.value
+  switch (key) {
+    case 'pin':
+      togglePin(chatId)
+      break
+    case 'export':
+      exportChat(chatId)
+      break
+    case 'copy':
+      copyChat(chatId)
+      break
+    case 'clear':
+      showClearConfirm.value = true
+      break
+    case 'groupSettings':
+      showMemberSidebar.value = true
+      break
+    case 'leave':
+      showLeaveConfirm.value = true
+      break
+  }
+}
+
+/** 设置项变更处理 */
+function handleThemeChange(val: string) {
+  settingStore.toggleTheme(val)
+}
+function handleFontSizeChange(val: number) {
+  settingStore.fontSize = val
+}
+function handleWindowShadowChange(val: boolean) {
+  settingStore.windowShadow = val
+}
+function handleSendKeyChange(val: string) {
+  settingStore.sendKey = val
+}
+function handleNotifyChange(val: boolean) {
+  settingStore.notifyEnabled = val
+}
+function handleSoundChange(val: boolean) {
+  settingStore.soundEnabled = val
 }
 
 /** 右键菜单操作 */
@@ -781,40 +896,61 @@ function memberStyle(member: Member) {
   color: #8b93a7;
 }
 
-.more-options {
+/* ========== 设置弹窗样式 ========== */
+.settings-section {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 20px;
+  padding: 12px 0;
 }
 
-.more-option-item {
-  padding: 8px 12px;
-  cursor: pointer;
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 14px;
   color: #18181c;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 6px;
-  transition: background 0.2s ease;
 }
 
-:global(html[data-theme='dark']) .more-option-item {
+:global(html[data-theme='dark']) .settings-item {
   color: #ffffff;
 }
 
-.more-option-item:hover {
-  background: rgba(99, 99, 99, 0.1);
+.about-content {
+  text-align: center;
+  padding: 20px 0;
 }
 
-.more-divider {
-  height: 1px;
-  background: #e3e3e3;
-  margin: 4px 0;
+.about-logo {
+  font-size: 64px;
+  margin-bottom: 16px;
 }
 
-:global(html[data-theme='dark']) .more-divider {
-  background: #404040;
+.about-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #18181c;
+}
+
+:global(html[data-theme='dark']) .about-name {
+  color: #ffffff;
+}
+
+.about-version {
+  font-size: 14px;
+  color: #5c6166;
+  margin: 0 0 12px;
+}
+
+:global(html[data-theme='dark']) .about-version {
+  color: #8b93a7;
+}
+
+.about-desc {
+  font-size: 13px;
+  color: #999;
+  margin: 0 0 24px;
 }
 
 /* ========== 响应式布局 ========== */

@@ -11,9 +11,17 @@ export default defineNitroConfig({
     // Token 过期时间(秒)
     tokenExpiresIn: 86400 * 7 // 7天
   },
-  // 路由规则
+  // 路由规则：/api 与 /mercy 均开启 CORS (文档第五部分接口前缀)
   routeRules: {
     '/api/**': {
+      cors: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+      }
+    },
+    '/mercy/**': {
       cors: true,
       headers: {
         'Access-Control-Allow-Origin': '*',

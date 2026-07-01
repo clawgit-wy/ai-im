@@ -52,7 +52,7 @@ export enum StoresEnum {
   GLOBAL = 'global'
 }
 
-/** 会话类型 1单聊 2群聊 */
+/** 会话类型 1单聊 2群聊 (应用内部使用，保留兼容) */
 export enum ChatTypeEnum {
   /** 单聊 */
   SINGLE = 1,
@@ -61,7 +61,24 @@ export enum ChatTypeEnum {
 }
 
 /**
- * 消息类型
+ * 会话类型 (yutong-im 规范，对应文档 4.2.3)
+ * p=个人, g=群组, s=服务号, t=通知, r=机器人
+ */
+export enum ChatTypeListEnum {
+  /** 个人(私聊) */
+  PERSON = 'p',
+  /** 群组(群聊) */
+  GROUP = 'g',
+  /** 服务号 */
+  SERVICE_NUM = 's',
+  /** 通知(系统消息) */
+  TEMPLATE_USER = 't',
+  /** 机器人(系统消息) */
+  ROBOT = 'r'
+}
+
+/**
+ * 消息类型 (应用内部使用，保留兼容)
  */
 export enum MsgEnum {
   /** 文本 */
@@ -80,6 +97,100 @@ export enum MsgEnum {
   SYSTEM,
   /** 回复 */
   REPLY
+}
+
+/**
+ * yutong-im 消息类型码 (对应文档 4.2.4)
+ */
+export enum MsgTypeEnum {
+  /** 文本消息 */
+  TXT = 0,
+  /** 图片消息 */
+  IMG = 1,
+  /** 语音消息 */
+  VOICE = 2,
+  /** 视频消息 */
+  VIDEO = 3,
+  /** 文件消息 */
+  FILE = 4,
+  /** 群系统通知(改名/加人/踢人等) */
+  NOTIFY = 5,
+  /** 群公告 */
+  ANNOUNCEMENT = 6,
+  /** 名片消息 */
+  CARD = 7,
+  /** 位置消息 */
+  LOCATION = 8,
+  /** 撤回消息 */
+  WITHDRAW = 9,
+  /** @人消息 */
+  AT = 10,
+  /** 推送消息 */
+  PUSH = 11,
+  /** 视频会议 */
+  MEETING = 12,
+  /** 多选转发 */
+  MANY_FORWARD = 14,
+  /** GIF 消息 */
+  GIF = 15,
+  /** 新消息通知(置顶/取消) */
+  NOTIFY_GENERAL = 18
+}
+
+/**
+ * 消息状态 (对应文档 4.2.5)
+ */
+export enum MsgStatusEnum {
+  /** 默认 */
+  DEFAULT = 0,
+  /** 发送中 */
+  SENDING = 1,
+  /** 发送成功 */
+  SEND_SUCCEED = 2,
+  /** 发送失败 */
+  SEND_FAILED = 3
+}
+
+/**
+ * WebSocket 消息类型 (长连接，对应文档 4.2.6)
+ */
+export enum SocketMsgTypeEnum {
+  /** 建立连接 */
+  CONNECT = 1,
+  /** 断开连接 */
+  DISCONNECT = 2,
+  /** 心跳 */
+  HEARTBEAT = 3,
+  /** 聊天消息 */
+  CHAT = 5,
+  /** 推送消息 */
+  PUSH = 6,
+  /** 消息已读 */
+  READED = 7,
+  /** 用户在线状态变更 */
+  ONLINE_CHANGE = 8,
+  /** 群成员变更 */
+  MEMBER_CHANGE = 9,
+  /** 会话置顶 */
+  SESSION_TOP = 10,
+  /** 未读数变更 */
+  UNREAD_CHANGE = 11,
+  /** 消息撤回 */
+  WITHDRAW = 16,
+  /** 连接设备变更 */
+  DEVICE_CHANGE = 17,
+  /** 消息提醒 */
+  REMIND = 18,
+  /** 退出设备 */
+  LOGOUT = 19,
+  /** 删除会话 */
+  SESSION_DEL = 20,
+  /** 版本更新 */
+  VERSION_UPDATE = 32,
+  /** 视频会议通知 */
+  MEETING_NOTIFY = 33,
+  /** 系统通知 */
+  SYSTEM_NOTIFY = 48
 }
 
 /**

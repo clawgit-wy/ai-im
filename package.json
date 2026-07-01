@@ -6,7 +6,7 @@
   "description": "AI智能助手桌面应用 - 基于 Vue3 + Tauri",
   "scripts": {
     "dev": "vite",
-    "dev:mock": "nitro dev server",
+    "dev:mock": "nitro dev server --port 3001",
     "dev:all": "concurrently -k -n mock,web \"npm:dev:mock\" \"npm:dev\"",
     "build": "vue-tsc --noEmit && vite build",
     "tauri:dev": "tauri dev",

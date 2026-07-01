@@ -52,6 +52,108 @@ declare module "nitropack/types" {
     '/api/chat/session/page': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/chat/session/page.get').default>>>>
     }
+    '/api/chatTopUp/topUpMsg': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/chatTopUp/topUpMsg.post').default>>>>
+    }
+    '/api/contact/add': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/add.post').default>>>>
+    }
+    '/api/contact/change': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/change.post').default>>>>
+    }
+    '/api/contact/del': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/del.post').default>>>>
+    }
+    '/api/contact/info.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/info.do.post').default>>>>
+    }
+    '/api/contact/list': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/list.post').default>>>>
+    }
+    '/api/contact/phoneByAccount': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/phoneByAccount.post').default>>>>
+    }
+    '/api/contact/search.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/search.do.post').default>>>>
+    }
+    '/api/contact/updateSign.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/contact/updateSign.do.post').default>>>>
+    }
+    '/api/group/add.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/add.do.post').default>>>>
+    }
+    '/api/group/changeAdmin': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/changeAdmin.post').default>>>>
+    }
+    '/api/group/create.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/create.do.post').default>>>>
+    }
+    '/api/group/disband.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/disband.do.post').default>>>>
+    }
+    '/api/group/infoNew.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/infoNew.do.post').default>>>>
+    }
+    '/api/group/listNew.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/listNew.do.post').default>>>>
+    }
+    '/api/group/quit.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/quit.do.post').default>>>>
+    }
+    '/api/group/remove.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/remove.do.post').default>>>>
+    }
+    '/api/group/searchPage.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/searchPage.do.post').default>>>>
+    }
+    '/api/group/update.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/update.do.post').default>>>>
+    }
+    '/api/group/updateNotice.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/group/updateNotice.do.post').default>>>>
+    }
+    '/api/msg/clear.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/clear.do.post').default>>>>
+    }
+    '/api/msg/offlineAndTop.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/offlineAndTop.do.post').default>>>>
+    }
+    '/api/msg/read.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/read.do.post').default>>>>
+    }
+    '/api/msg/readMsg.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/readMsg.do.post').default>>>>
+    }
+    '/api/msg/remind.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/remind.do.post').default>>>>
+    }
+    '/api/msg/remindList.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/remindList.do.post').default>>>>
+    }
+    '/api/msg/status.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/status.do.post').default>>>>
+    }
+    '/api/msg/sync.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/sync.do.post').default>>>>
+    }
+    '/api/msg/top.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/top.do.post').default>>>>
+    }
+    '/api/msg/topList.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/topList.do.post').default>>>>
+    }
+    '/api/msg/unReadNum.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/unReadNum.do.post').default>>>>
+    }
+    '/api/msg/withdraw.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/msg/withdraw.do.post').default>>>>
+    }
+    '/api/org/emp.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/org/emp.do.post').default>>>>
+    }
+    '/api/org/listYxt.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/org/listYxt.do.post').default>>>>
+    }
     '/api/plugin': {
       'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/plugin.put').default>>>>
     }
@@ -92,6 +194,24 @@ declare module "nitropack/types" {
     '/api/schedule/list': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/schedule/list.get').default>>>>
     }
+    '/api/session/del': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/session/del.post').default>>>>
+    }
+    '/api/session/list': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/session/list.post').default>>>>
+    }
+    '/api/session/msgNotice/close': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/session/msgNotice/close.post').default>>>>
+    }
+    '/api/session/msgNotice/list': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/session/msgNotice/list.post').default>>>>
+    }
+    '/api/session/msgNotice/open': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/session/msgNotice/open.post').default>>>>
+    }
+    '/api/session/msgNotice/reset': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/session/msgNotice/reset.post').default>>>>
+    }
     '/api/user/info': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/info.get').default>>>>
       'put': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/info.put').default>>>>
@@ -102,6 +222,12 @@ declare module "nitropack/types" {
     '/api/user/logout': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/logout.post').default>>>>
     }
+    '/api/user/onlines.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/onlines.do.post').default>>>>
+    }
+    '/api/user/onlineStatus': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/onlineStatus.post').default>>>>
+    }
     '/api/user/register': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/register.post').default>>>>
     }
@@ -110,6 +236,15 @@ declare module "nitropack/types" {
     }
     '/api/user/send-code': {
       'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/user/send-code.post').default>>>>
+    }
+    '/api/yml/meetingInfo': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../api/yml/meetingInfo.post').default>>>>
+    }
+    '/mercy/app/auth/login.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../routes/mercy/app/auth/login.do.post').default>>>>
+    }
+    '/mercy/app/user/logout.do': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../routes/mercy/app/user/logout.do.post').default>>>>
     }
   }
 }

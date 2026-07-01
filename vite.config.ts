@@ -91,10 +91,15 @@ export default defineConfig(({ mode }: ConfigEnv) => {
     // 1. 防止 vite 清屏遮盖 rust 错误
     clearScreen: false,
     server: {
-      // 代理配置：将 /api 请求代理到 Nitro 后端，避免 CORS
+      // 代理配置：将 /api 与 /mercy 请求代理到 Nitro 后端，避免 CORS
+      // (文档第五部分接口前缀为 /api/ 与 /mercy/app/)
       proxy: {
         '/api': {
-          target: 'http://localhost:3000',
+          target: 'http://localhost:3001',
+          changeOrigin: true
+        },
+        '/mercy': {
+          target: 'http://localhost:3001',
           changeOrigin: true
         }
       },

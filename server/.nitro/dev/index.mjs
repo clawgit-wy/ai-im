@@ -1,36 +1,36 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
-import destr from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/destr/dist/index.mjs';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestURL, getRequestHeader, getResponseHeader, getRequestHeaders, setResponseHeaders, setResponseStatus, send, removeResponseHeader, appendResponseHeader, setResponseHeader, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, readBody, getQuery as getQuery$1, getHeader } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/h3/dist/index.mjs';
-import { createHooks } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/node-mock-http/dist/index.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, decodePath, withLeadingSlash, withoutTrailingSlash } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/ufo/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/ohash/dist/index.mjs';
-import { klona } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/scule/dist/index.mjs';
-import { getContext } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/unctx/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/radix3/dist/index.mjs';
+import destr from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/destr@2.0.5/node_modules/destr/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestURL, getRequestHeader, getResponseHeader, getRequestHeaders, setResponseHeaders, setResponseStatus, send, removeResponseHeader, appendResponseHeader, setResponseHeader, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getRouterParam, readBody, getQuery as getQuery$1, getHeader } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index.mjs';
+import { createHooks } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/node-mock-http@1.0.4/node_modules/node-mock-http/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, decodePath, withLeadingSlash, withoutTrailingSlash } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/ufo@1.6.4/node_modules/ufo/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_better-sqlite3@12.11.1__ioredis@5.11.1/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_better-sqlite3@12.11.1__ioredis@5.11.1/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/ohash@2.0.11/node_modules/ohash/dist/index.mjs';
+import { klona } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/defu@6.1.7/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
+import { getContext } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/unctx@2.5.0/node_modules/unctx/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
 import path, { resolve, dirname, join } from 'node:path';
-import consola from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/youch-core/build/index.js';
-import { Youch } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/nitropack/node_modules/source-map/source-map.js';
+import consola from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/consola@3.4.2/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/youch-core@0.3.3/node_modules/youch-core/build/index.js';
+import { Youch } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/youch@4.1.1/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/source-map@0.7.6/node_modules/source-map/source-map.js';
 import http, { Server } from 'node:http';
-import { WebSocketServer, WebSocket } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/ws/wrapper.mjs';
+import { WebSocketServer, WebSocket } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/ws@8.21.0/node_modules/ws/wrapper.mjs';
 import fs, { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/pathe/dist/index.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import Database from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/better-sqlite3/lib/index.js';
-import bcrypt from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/bcryptjs/index.js';
-import jwt from 'file:///Users/apple/Desktop/ai-im/ai-im/node_modules/jsonwebtoken/index.js';
+import Database from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/better-sqlite3@12.11.1/node_modules/better-sqlite3/lib/index.js';
+import bcrypt from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/bcryptjs@3.0.3/node_modules/bcryptjs/index.js';
+import jwt from 'file:///home/tmx_spark/dev/projects/ai-im/node_modules/.pnpm/jsonwebtoken@9.0.3/node_modules/jsonwebtoken/index.js';
 
-const serverAssets = [{"baseName":"server","dir":"/Users/apple/Desktop/ai-im/ai-im/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/home/tmx_spark/dev/projects/ai-im/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -42,11 +42,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/apple/Desktop/ai-im/ai-im/server"}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/apple/Desktop/ai-im/ai-im/server"}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/apple/Desktop/ai-im/ai-im/server/.nitro"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/apple/Desktop/ai-im/ai-im/server/.nitro/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/apple/Desktop/ai-im/ai-im/server/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/tmx_spark/dev/projects/ai-im/server"}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/tmx_spark/dev/projects/ai-im/server"}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/tmx_spark/dev/projects/ai-im/server/.nitro"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/tmx_spark/dev/projects/ai-im/server/.nitro/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/tmx_spark/dev/projects/ai-im/server/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -621,6 +621,18 @@ const _inlineRuntimeConfig = {
   "nitro": {
     "routeRules": {
       "/api/**": {
+        "cors": true,
+        "headers": {
+          "access-control-allow-origin": "*",
+          "access-control-allow-methods": "*",
+          "access-control-allow-headers": "*",
+          "access-control-max-age": "0",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        }
+      },
+      "/mercy/**": {
         "cors": true,
         "headers": {
           "access-control-allow-origin": "*",
@@ -1214,7 +1226,7 @@ function broadcastToUser(uid, data) {
 globalThis.broadcastToSession = broadcastToSession;
 globalThis.broadcastToUser = broadcastToUser;
 globalThis.wsConnections = wsConnections;
-const _GgIoiXFOIg6uuPdlZ18ubRCqyIcQsNekfvCiEOeyg = defineNitroPlugin((nitroApp) => {
+const _FrSaqRoK40A0BTTt9hmMppeUWhaOXtKzl4vYgdvKDIE = defineNitroPlugin((nitroApp) => {
   const originalListen = http.Server.prototype.listen;
   http.Server.prototype.listen = function(...args) {
     const result = originalListen.apply(this, args);
@@ -1232,7 +1244,7 @@ const _GgIoiXFOIg6uuPdlZ18ubRCqyIcQsNekfvCiEOeyg = defineNitroPlugin((nitroApp) 
 });
 
 const plugins = [
-  _GgIoiXFOIg6uuPdlZ18ubRCqyIcQsNekfvCiEOeyg
+  _FrSaqRoK40A0BTTt9hmMppeUWhaOXtKzl4vYgdvKDIE
 ];
 
 const assets = {};
@@ -1260,7 +1272,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _OPCn4J = eventHandler((event) => {
+const _QemB9J = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -1324,93 +1336,183 @@ const _OPCn4J = eventHandler((event) => {
   return readAsset(id);
 });
 
-const _lazy_k3cIXQ = () => Promise.resolve().then(function () { return agent_delete$1; });
-const _lazy_FxnxoJ = () => Promise.resolve().then(function () { return agent_post$1; });
-const _lazy_HF9agb = () => Promise.resolve().then(function () { return agent_put$1; });
-const _lazy_QX1CRL = () => Promise.resolve().then(function () { return detail_get$9; });
-const _lazy_fly2EF = () => Promise.resolve().then(function () { return list_get$7; });
-const _lazy_u77KmL = () => Promise.resolve().then(function () { return group_post$1; });
-const _lazy_zgcoqD = () => Promise.resolve().then(function () { return exit_delete$1; });
-const _lazy_hpBAvA = () => Promise.resolve().then(function () { return member_delete$1; });
-const _lazy_DQoULj = () => Promise.resolve().then(function () { return member_post$1; });
-const _lazy_Knsart = () => Promise.resolve().then(function () { return members_get$1; });
-const _lazy_hOD0M8 = () => Promise.resolve().then(function () { return msg_post$1; });
-const _lazy_zORw3Z = () => Promise.resolve().then(function () { return page_get$3; });
-const _lazy_shXaOi = () => Promise.resolve().then(function () { return read_put$1; });
-const _lazy_ZByIxQ = () => Promise.resolve().then(function () { return recall_put$1; });
-const _lazy_DcbW7_ = () => Promise.resolve().then(function () { return recv_get$1; });
-const _lazy_1_0c6u = () => Promise.resolve().then(function () { return session_delete$1; });
-const _lazy_z164kE = () => Promise.resolve().then(function () { return session_post$1; });
-const _lazy_czSXb_ = () => Promise.resolve().then(function () { return detail_get$7; });
-const _lazy_wxaoeg = () => Promise.resolve().then(function () { return page_get$1; });
-const _lazy_kh8PX4 = () => Promise.resolve().then(function () { return plugin_put$1; });
-const _lazy_exzOCj = () => Promise.resolve().then(function () { return detail_get$5; });
-const _lazy_UWeRUR = () => Promise.resolve().then(function () { return install_post$1; });
-const _lazy_Mu9zfp = () => Promise.resolve().then(function () { return list_get$5; });
-const _lazy_1QO13L = () => Promise.resolve().then(function () { return toggle_put$1; });
-const _lazy_LQuTyn = () => Promise.resolve().then(function () { return uninstall_delete$1; });
-const _lazy_gxuuhy = () => Promise.resolve().then(function () { return robot_delete$1; });
-const _lazy_pH6hCT = () => Promise.resolve().then(function () { return robot_post$1; });
-const _lazy_3oomR3 = () => Promise.resolve().then(function () { return robot_put$1; });
-const _lazy_ivcIYR = () => Promise.resolve().then(function () { return detail_get$3; });
-const _lazy_UmvGdP = () => Promise.resolve().then(function () { return list_get$3; });
-const _lazy_moofoa = () => Promise.resolve().then(function () { return schedule_delete$1; });
-const _lazy_Yw3QEQ = () => Promise.resolve().then(function () { return schedule_post$1; });
-const _lazy_aUJlkQ = () => Promise.resolve().then(function () { return schedule_put$1; });
-const _lazy_qYOeMT = () => Promise.resolve().then(function () { return detail_get$1; });
-const _lazy_uBtP8W = () => Promise.resolve().then(function () { return list_get$1; });
-const _lazy_vglDQ0 = () => Promise.resolve().then(function () { return info_get$1; });
-const _lazy_pQPF0s = () => Promise.resolve().then(function () { return info_put$1; });
-const _lazy_xx9rQD = () => Promise.resolve().then(function () { return login_post$1; });
-const _lazy_IdprHp = () => Promise.resolve().then(function () { return logout_post$1; });
-const _lazy_RBQWzV = () => Promise.resolve().then(function () { return register_post$1; });
-const _lazy_q6CkIb = () => Promise.resolve().then(function () { return resetPassword_post$1; });
-const _lazy_sGZ0Kv = () => Promise.resolve().then(function () { return sendCode_post$1; });
+const _lazy_DXH52n = () => Promise.resolve().then(function () { return agent_delete$1; });
+const _lazy_SwMIUd = () => Promise.resolve().then(function () { return agent_post$1; });
+const _lazy_vMfyWB = () => Promise.resolve().then(function () { return agent_put$1; });
+const _lazy_cXz6Bg = () => Promise.resolve().then(function () { return detail_get$9; });
+const _lazy__rHKcO = () => Promise.resolve().then(function () { return list_get$7; });
+const _lazy_MUa1aK = () => Promise.resolve().then(function () { return group_post$1; });
+const _lazy_GDphrg = () => Promise.resolve().then(function () { return exit_delete$1; });
+const _lazy_qTYKfe = () => Promise.resolve().then(function () { return member_delete$1; });
+const _lazy__i9nBj = () => Promise.resolve().then(function () { return member_post$1; });
+const _lazy_rZkhY0 = () => Promise.resolve().then(function () { return members_get$1; });
+const _lazy_g8AgCW = () => Promise.resolve().then(function () { return msg_post$1; });
+const _lazy_dfIBow = () => Promise.resolve().then(function () { return page_get$3; });
+const _lazy_L1sEXC = () => Promise.resolve().then(function () { return read_put$1; });
+const _lazy_sDcArc = () => Promise.resolve().then(function () { return recall_put$1; });
+const _lazy_BiOzTF = () => Promise.resolve().then(function () { return recv_get$1; });
+const _lazy_H91yTc = () => Promise.resolve().then(function () { return session_delete$1; });
+const _lazy_xKI5w2 = () => Promise.resolve().then(function () { return session_post$1; });
+const _lazy_SM3elQ = () => Promise.resolve().then(function () { return detail_get$7; });
+const _lazy_6Qwbqt = () => Promise.resolve().then(function () { return page_get$1; });
+const _lazy_Ff4DLE = () => Promise.resolve().then(function () { return topUpMsg_post$1; });
+const _lazy_se1pXT = () => Promise.resolve().then(function () { return add_post$1; });
+const _lazy_afeA_v = () => Promise.resolve().then(function () { return change_post$1; });
+const _lazy_Y_aMfo = () => Promise.resolve().then(function () { return del_post$3; });
+const _lazy_gDFmQB = () => Promise.resolve().then(function () { return info_do_post$1; });
+const _lazy_12t93j = () => Promise.resolve().then(function () { return list_post$5; });
+const _lazy_gxgwmL = () => Promise.resolve().then(function () { return phoneByAccount_post$1; });
+const _lazy_SQifjo = () => Promise.resolve().then(function () { return search_do_post$1; });
+const _lazy_4lTlL1 = () => Promise.resolve().then(function () { return updateSign_do_post$1; });
+const _lazy_1oNMG7 = () => Promise.resolve().then(function () { return add_do_post$1; });
+const _lazy_YhbI9q = () => Promise.resolve().then(function () { return changeAdmin_post$1; });
+const _lazy_9sirEV = () => Promise.resolve().then(function () { return create_do_post$1; });
+const _lazy_MQYt89 = () => Promise.resolve().then(function () { return disband_do_post$1; });
+const _lazy_5JBecZ = () => Promise.resolve().then(function () { return infoNew_do_post$1; });
+const _lazy_zg76hR = () => Promise.resolve().then(function () { return listNew_do_post$1; });
+const _lazy_pXXVeF = () => Promise.resolve().then(function () { return quit_do_post$1; });
+const _lazy_DNTLSK = () => Promise.resolve().then(function () { return remove_do_post$1; });
+const _lazy_CaxXGu = () => Promise.resolve().then(function () { return searchPage_do_post$1; });
+const _lazy_16YehV = () => Promise.resolve().then(function () { return update_do_post$1; });
+const _lazy__Lbxfj = () => Promise.resolve().then(function () { return updateNotice_do_post$1; });
+const _lazy_EChDTl = () => Promise.resolve().then(function () { return clear_do_post$1; });
+const _lazy_eoYAaX = () => Promise.resolve().then(function () { return offlineAndTop_do_post$1; });
+const _lazy_pUjiUQ = () => Promise.resolve().then(function () { return read_do_post$1; });
+const _lazy_QVwzk1 = () => Promise.resolve().then(function () { return readMsg_do_post$1; });
+const _lazy_0OOMRp = () => Promise.resolve().then(function () { return remind_do_post$1; });
+const _lazy_5IffaM = () => Promise.resolve().then(function () { return remindList_do_post$1; });
+const _lazy_DyE13I = () => Promise.resolve().then(function () { return status_do_post$1; });
+const _lazy_bRjn5d = () => Promise.resolve().then(function () { return sync_do_post$1; });
+const _lazy_V8759a = () => Promise.resolve().then(function () { return top_do_post$1; });
+const _lazy_xAhoCA = () => Promise.resolve().then(function () { return topList_do_post$1; });
+const _lazy_tnME0H = () => Promise.resolve().then(function () { return unReadNum_do_post$1; });
+const _lazy_mZXHjX = () => Promise.resolve().then(function () { return withdraw_do_post$1; });
+const _lazy_y6b232 = () => Promise.resolve().then(function () { return emp_do_post$1; });
+const _lazy_XThr8X = () => Promise.resolve().then(function () { return listYxt_do_post$1; });
+const _lazy_xBXD47 = () => Promise.resolve().then(function () { return plugin_put$1; });
+const _lazy_dK3aLP = () => Promise.resolve().then(function () { return detail_get$5; });
+const _lazy_mVfWVY = () => Promise.resolve().then(function () { return install_post$1; });
+const _lazy_VP12yK = () => Promise.resolve().then(function () { return list_get$5; });
+const _lazy_L9lHPm = () => Promise.resolve().then(function () { return toggle_put$1; });
+const _lazy_b8I8mI = () => Promise.resolve().then(function () { return uninstall_delete$1; });
+const _lazy_P6qDho = () => Promise.resolve().then(function () { return robot_delete$1; });
+const _lazy_aJq1Em = () => Promise.resolve().then(function () { return robot_post$1; });
+const _lazy_jE_TpP = () => Promise.resolve().then(function () { return robot_put$1; });
+const _lazy_RJqC4W = () => Promise.resolve().then(function () { return detail_get$3; });
+const _lazy_pD9cj6 = () => Promise.resolve().then(function () { return list_get$3; });
+const _lazy_LVfL2M = () => Promise.resolve().then(function () { return schedule_delete$1; });
+const _lazy_PaNSKT = () => Promise.resolve().then(function () { return schedule_post$1; });
+const _lazy_32dNVU = () => Promise.resolve().then(function () { return schedule_put$1; });
+const _lazy_jEFuzP = () => Promise.resolve().then(function () { return detail_get$1; });
+const _lazy_auEIuH = () => Promise.resolve().then(function () { return list_get$1; });
+const _lazy_ywgWAJ = () => Promise.resolve().then(function () { return del_post$1; });
+const _lazy_3skar0 = () => Promise.resolve().then(function () { return list_post$3; });
+const _lazy_ZCdC4o = () => Promise.resolve().then(function () { return close_post$1; });
+const _lazy_T1mS7E = () => Promise.resolve().then(function () { return list_post$1; });
+const _lazy_uoh9lV = () => Promise.resolve().then(function () { return open_post$1; });
+const _lazy_G_yzvF = () => Promise.resolve().then(function () { return reset_post$1; });
+const _lazy__xAH7M = () => Promise.resolve().then(function () { return info_get$1; });
+const _lazy_GS2jjq = () => Promise.resolve().then(function () { return info_put$1; });
+const _lazy_x7H6Rd = () => Promise.resolve().then(function () { return login_post$1; });
+const _lazy_yX9bfY = () => Promise.resolve().then(function () { return logout_post$1; });
+const _lazy_l231Hj = () => Promise.resolve().then(function () { return onlines_do_post$1; });
+const _lazy_k6nlA3 = () => Promise.resolve().then(function () { return onlineStatus_post$1; });
+const _lazy_l0LdUY = () => Promise.resolve().then(function () { return register_post$1; });
+const _lazy_5Zfvf9 = () => Promise.resolve().then(function () { return resetPassword_post$1; });
+const _lazy_8QvxN2 = () => Promise.resolve().then(function () { return sendCode_post$1; });
+const _lazy_HD2p4r = () => Promise.resolve().then(function () { return meetingInfo_post$1; });
+const _lazy_gHQm_Q = () => Promise.resolve().then(function () { return login_do_post$1; });
+const _lazy_deGXec = () => Promise.resolve().then(function () { return logout_do_post$1; });
 
 const handlers = [
-  { route: '', handler: _OPCn4J, lazy: false, middleware: true, method: undefined },
-  { route: '/api/agent', handler: _lazy_k3cIXQ, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/agent', handler: _lazy_FxnxoJ, lazy: true, middleware: false, method: "post" },
-  { route: '/api/agent', handler: _lazy_HF9agb, lazy: true, middleware: false, method: "put" },
-  { route: '/api/agent/detail', handler: _lazy_QX1CRL, lazy: true, middleware: false, method: "get" },
-  { route: '/api/agent/list', handler: _lazy_fly2EF, lazy: true, middleware: false, method: "get" },
-  { route: '/api/chat/group', handler: _lazy_u77KmL, lazy: true, middleware: false, method: "post" },
-  { route: '/api/chat/group/exit', handler: _lazy_zgcoqD, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/chat/group/member', handler: _lazy_hpBAvA, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/chat/group/member', handler: _lazy_DQoULj, lazy: true, middleware: false, method: "post" },
-  { route: '/api/chat/group/members', handler: _lazy_Knsart, lazy: true, middleware: false, method: "get" },
-  { route: '/api/chat/msg', handler: _lazy_hOD0M8, lazy: true, middleware: false, method: "post" },
-  { route: '/api/chat/msg/page', handler: _lazy_zORw3Z, lazy: true, middleware: false, method: "get" },
-  { route: '/api/chat/msg/read', handler: _lazy_shXaOi, lazy: true, middleware: false, method: "put" },
-  { route: '/api/chat/msg/recall', handler: _lazy_ZByIxQ, lazy: true, middleware: false, method: "put" },
-  { route: '/api/chat/msg/recv', handler: _lazy_DcbW7_, lazy: true, middleware: false, method: "get" },
-  { route: '/api/chat/session', handler: _lazy_1_0c6u, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/chat/session', handler: _lazy_z164kE, lazy: true, middleware: false, method: "post" },
-  { route: '/api/chat/session/detail', handler: _lazy_czSXb_, lazy: true, middleware: false, method: "get" },
-  { route: '/api/chat/session/page', handler: _lazy_wxaoeg, lazy: true, middleware: false, method: "get" },
-  { route: '/api/plugin', handler: _lazy_kh8PX4, lazy: true, middleware: false, method: "put" },
-  { route: '/api/plugin/detail', handler: _lazy_exzOCj, lazy: true, middleware: false, method: "get" },
-  { route: '/api/plugin/install', handler: _lazy_UWeRUR, lazy: true, middleware: false, method: "post" },
-  { route: '/api/plugin/list', handler: _lazy_Mu9zfp, lazy: true, middleware: false, method: "get" },
-  { route: '/api/plugin/toggle', handler: _lazy_1QO13L, lazy: true, middleware: false, method: "put" },
-  { route: '/api/plugin/uninstall', handler: _lazy_LQuTyn, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/robot', handler: _lazy_gxuuhy, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/robot', handler: _lazy_pH6hCT, lazy: true, middleware: false, method: "post" },
-  { route: '/api/robot', handler: _lazy_3oomR3, lazy: true, middleware: false, method: "put" },
-  { route: '/api/robot/detail', handler: _lazy_ivcIYR, lazy: true, middleware: false, method: "get" },
-  { route: '/api/robot/list', handler: _lazy_UmvGdP, lazy: true, middleware: false, method: "get" },
-  { route: '/api/schedule', handler: _lazy_moofoa, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/schedule', handler: _lazy_Yw3QEQ, lazy: true, middleware: false, method: "post" },
-  { route: '/api/schedule', handler: _lazy_aUJlkQ, lazy: true, middleware: false, method: "put" },
-  { route: '/api/schedule/detail', handler: _lazy_qYOeMT, lazy: true, middleware: false, method: "get" },
-  { route: '/api/schedule/list', handler: _lazy_uBtP8W, lazy: true, middleware: false, method: "get" },
-  { route: '/api/user/info', handler: _lazy_vglDQ0, lazy: true, middleware: false, method: "get" },
-  { route: '/api/user/info', handler: _lazy_pQPF0s, lazy: true, middleware: false, method: "put" },
-  { route: '/api/user/login', handler: _lazy_xx9rQD, lazy: true, middleware: false, method: "post" },
-  { route: '/api/user/logout', handler: _lazy_IdprHp, lazy: true, middleware: false, method: "post" },
-  { route: '/api/user/register', handler: _lazy_RBQWzV, lazy: true, middleware: false, method: "post" },
-  { route: '/api/user/reset-password', handler: _lazy_q6CkIb, lazy: true, middleware: false, method: "post" },
-  { route: '/api/user/send-code', handler: _lazy_sGZ0Kv, lazy: true, middleware: false, method: "post" }
+  { route: '', handler: _QemB9J, lazy: false, middleware: true, method: undefined },
+  { route: '/api/agent', handler: _lazy_DXH52n, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/agent', handler: _lazy_SwMIUd, lazy: true, middleware: false, method: "post" },
+  { route: '/api/agent', handler: _lazy_vMfyWB, lazy: true, middleware: false, method: "put" },
+  { route: '/api/agent/detail', handler: _lazy_cXz6Bg, lazy: true, middleware: false, method: "get" },
+  { route: '/api/agent/list', handler: _lazy__rHKcO, lazy: true, middleware: false, method: "get" },
+  { route: '/api/chat/group', handler: _lazy_MUa1aK, lazy: true, middleware: false, method: "post" },
+  { route: '/api/chat/group/exit', handler: _lazy_GDphrg, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/chat/group/member', handler: _lazy_qTYKfe, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/chat/group/member', handler: _lazy__i9nBj, lazy: true, middleware: false, method: "post" },
+  { route: '/api/chat/group/members', handler: _lazy_rZkhY0, lazy: true, middleware: false, method: "get" },
+  { route: '/api/chat/msg', handler: _lazy_g8AgCW, lazy: true, middleware: false, method: "post" },
+  { route: '/api/chat/msg/page', handler: _lazy_dfIBow, lazy: true, middleware: false, method: "get" },
+  { route: '/api/chat/msg/read', handler: _lazy_L1sEXC, lazy: true, middleware: false, method: "put" },
+  { route: '/api/chat/msg/recall', handler: _lazy_sDcArc, lazy: true, middleware: false, method: "put" },
+  { route: '/api/chat/msg/recv', handler: _lazy_BiOzTF, lazy: true, middleware: false, method: "get" },
+  { route: '/api/chat/session', handler: _lazy_H91yTc, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/chat/session', handler: _lazy_xKI5w2, lazy: true, middleware: false, method: "post" },
+  { route: '/api/chat/session/detail', handler: _lazy_SM3elQ, lazy: true, middleware: false, method: "get" },
+  { route: '/api/chat/session/page', handler: _lazy_6Qwbqt, lazy: true, middleware: false, method: "get" },
+  { route: '/api/chatTopUp/topUpMsg', handler: _lazy_Ff4DLE, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/add', handler: _lazy_se1pXT, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/change', handler: _lazy_afeA_v, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/del', handler: _lazy_Y_aMfo, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/info.do', handler: _lazy_gDFmQB, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/list', handler: _lazy_12t93j, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/phoneByAccount', handler: _lazy_gxgwmL, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/search.do', handler: _lazy_SQifjo, lazy: true, middleware: false, method: "post" },
+  { route: '/api/contact/updateSign.do', handler: _lazy_4lTlL1, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/add.do', handler: _lazy_1oNMG7, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/changeAdmin', handler: _lazy_YhbI9q, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/create.do', handler: _lazy_9sirEV, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/disband.do', handler: _lazy_MQYt89, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/infoNew.do', handler: _lazy_5JBecZ, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/listNew.do', handler: _lazy_zg76hR, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/quit.do', handler: _lazy_pXXVeF, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/remove.do', handler: _lazy_DNTLSK, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/searchPage.do', handler: _lazy_CaxXGu, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/update.do', handler: _lazy_16YehV, lazy: true, middleware: false, method: "post" },
+  { route: '/api/group/updateNotice.do', handler: _lazy__Lbxfj, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/clear.do', handler: _lazy_EChDTl, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/offlineAndTop.do', handler: _lazy_eoYAaX, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/read.do', handler: _lazy_pUjiUQ, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/readMsg.do', handler: _lazy_QVwzk1, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/remind.do', handler: _lazy_0OOMRp, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/remindList.do', handler: _lazy_5IffaM, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/status.do', handler: _lazy_DyE13I, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/sync.do', handler: _lazy_bRjn5d, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/top.do', handler: _lazy_V8759a, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/topList.do', handler: _lazy_xAhoCA, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/unReadNum.do', handler: _lazy_tnME0H, lazy: true, middleware: false, method: "post" },
+  { route: '/api/msg/withdraw.do', handler: _lazy_mZXHjX, lazy: true, middleware: false, method: "post" },
+  { route: '/api/org/emp.do', handler: _lazy_y6b232, lazy: true, middleware: false, method: "post" },
+  { route: '/api/org/listYxt.do', handler: _lazy_XThr8X, lazy: true, middleware: false, method: "post" },
+  { route: '/api/plugin', handler: _lazy_xBXD47, lazy: true, middleware: false, method: "put" },
+  { route: '/api/plugin/detail', handler: _lazy_dK3aLP, lazy: true, middleware: false, method: "get" },
+  { route: '/api/plugin/install', handler: _lazy_mVfWVY, lazy: true, middleware: false, method: "post" },
+  { route: '/api/plugin/list', handler: _lazy_VP12yK, lazy: true, middleware: false, method: "get" },
+  { route: '/api/plugin/toggle', handler: _lazy_L9lHPm, lazy: true, middleware: false, method: "put" },
+  { route: '/api/plugin/uninstall', handler: _lazy_b8I8mI, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/robot', handler: _lazy_P6qDho, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/robot', handler: _lazy_aJq1Em, lazy: true, middleware: false, method: "post" },
+  { route: '/api/robot', handler: _lazy_jE_TpP, lazy: true, middleware: false, method: "put" },
+  { route: '/api/robot/detail', handler: _lazy_RJqC4W, lazy: true, middleware: false, method: "get" },
+  { route: '/api/robot/list', handler: _lazy_pD9cj6, lazy: true, middleware: false, method: "get" },
+  { route: '/api/schedule', handler: _lazy_LVfL2M, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/schedule', handler: _lazy_PaNSKT, lazy: true, middleware: false, method: "post" },
+  { route: '/api/schedule', handler: _lazy_32dNVU, lazy: true, middleware: false, method: "put" },
+  { route: '/api/schedule/detail', handler: _lazy_jEFuzP, lazy: true, middleware: false, method: "get" },
+  { route: '/api/schedule/list', handler: _lazy_auEIuH, lazy: true, middleware: false, method: "get" },
+  { route: '/api/session/del', handler: _lazy_ywgWAJ, lazy: true, middleware: false, method: "post" },
+  { route: '/api/session/list', handler: _lazy_3skar0, lazy: true, middleware: false, method: "post" },
+  { route: '/api/session/msgNotice/close', handler: _lazy_ZCdC4o, lazy: true, middleware: false, method: "post" },
+  { route: '/api/session/msgNotice/list', handler: _lazy_T1mS7E, lazy: true, middleware: false, method: "post" },
+  { route: '/api/session/msgNotice/open', handler: _lazy_uoh9lV, lazy: true, middleware: false, method: "post" },
+  { route: '/api/session/msgNotice/reset', handler: _lazy_G_yzvF, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/info', handler: _lazy__xAH7M, lazy: true, middleware: false, method: "get" },
+  { route: '/api/user/info', handler: _lazy_GS2jjq, lazy: true, middleware: false, method: "put" },
+  { route: '/api/user/login', handler: _lazy_x7H6Rd, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/logout', handler: _lazy_yX9bfY, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/onlines.do', handler: _lazy_l231Hj, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/onlineStatus', handler: _lazy_k6nlA3, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/register', handler: _lazy_l0LdUY, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/reset-password', handler: _lazy_5Zfvf9, lazy: true, middleware: false, method: "post" },
+  { route: '/api/user/send-code', handler: _lazy_8QvxN2, lazy: true, middleware: false, method: "post" },
+  { route: '/api/yml/meetingInfo', handler: _lazy_HD2p4r, lazy: true, middleware: false, method: "post" },
+  { route: '/mercy/app/auth/login.do', handler: _lazy_gHQm_Q, lazy: true, middleware: false, method: "post" },
+  { route: '/mercy/app/user/logout.do', handler: _lazy_deGXec, lazy: true, middleware: false, method: "post" }
 ];
 
 function createNitroApp() {
@@ -2270,6 +2372,650 @@ const page_get$1 = /*#__PURE__*/Object.freeze({
   default: page_get
 });
 
+const topUpMsg_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const topUpMsg_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: topUpMsg_post
+});
+
+const add_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const add_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: add_post
+});
+
+const change_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const change_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: change_post
+});
+
+const del_post$2 = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const del_post$3 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: del_post$2
+});
+
+const info_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const uid = Number(body == null ? void 0 : body.uid);
+  const user = db.prepare("SELECT * FROM users WHERE uid = ?").get(uid);
+  if (!user) {
+    return fail("\u7528\u6237\u4E0D\u5B58\u5728", 404);
+  }
+  const ytUser = {
+    uid: String(user.uid),
+    name: user.name,
+    headUrl: user.avatar,
+    mobile: user.phone,
+    email: user.email,
+    sign: "",
+    online: String(user.onlineStatus)
+  };
+  return success(ytUser);
+});
+
+const info_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: info_do_post
+});
+
+const list_post$4 = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  const rows = db.prepare("SELECT * FROM users").all();
+  const list = rows.map((u) => ({
+    uid: String(u.uid),
+    name: u.name,
+    headUrl: u.avatar,
+    mobile: u.phone,
+    email: u.email,
+    sign: "",
+    online: String(u.onlineStatus)
+  }));
+  return success(listResponse(list, "", true));
+});
+
+const list_post$5 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: list_post$4
+});
+
+const phoneByAccount_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const account = body == null ? void 0 : body.account;
+  const user = db.prepare("SELECT phone FROM users WHERE email = ? OR phone = ? OR name = ?").get(account, account, account);
+  return success({ phone: (user == null ? void 0 : user.phone) || "" });
+});
+
+const phoneByAccount_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: phoneByAccount_post
+});
+
+const search_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const keyword = (body == null ? void 0 : body.keyword) || "";
+  const rows = db.prepare("SELECT * FROM users WHERE name LIKE ?").all(`%${keyword}%`);
+  const list = rows.map((u) => ({
+    uid: String(u.uid),
+    name: u.name,
+    headUrl: u.avatar,
+    mobile: u.phone,
+    email: u.email,
+    sign: "",
+    online: String(u.onlineStatus)
+  }));
+  return success(listResponse(list, "", true));
+});
+
+const search_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: search_do_post
+});
+
+const updateSign_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const updateSign_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: updateSign_do_post
+});
+
+const add_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const { group_id, uidList } = body || {};
+  const gid = Number(group_id);
+  const now = Date.now();
+  const insertMember = db.prepare(
+    "INSERT INTO group_members (uid, sessionId, username, avatar, role, onlineStatus, joinTime) VALUES (?, ?, ?, ?, ?, ?, ?)"
+  );
+  for (const raw of Array.isArray(uidList) ? uidList : []) {
+    const uid = Number(raw);
+    const u = db.prepare("SELECT name, avatar, onlineStatus FROM users WHERE uid = ?").get(uid);
+    insertMember.run(uid, gid, (u == null ? void 0 : u.name) || "\u672A\u77E5\u7528\u6237", (u == null ? void 0 : u.avatar) || "\u{1F464}", 3, (u == null ? void 0 : u.onlineStatus) || 1, now);
+  }
+  return success(null);
+});
+
+const add_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: add_do_post
+});
+
+const changeAdmin_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const { group_id, uid } = body || {};
+  const gid = Number(group_id);
+  const newOwner = Number(uid);
+  db.prepare("UPDATE group_members SET role = 3 WHERE sessionId = ? AND role = 1").run(gid);
+  db.prepare("UPDATE group_members SET role = 1 WHERE sessionId = ? AND uid = ?").run(gid, newOwner);
+  return success(null);
+});
+
+const changeAdmin_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: changeAdmin_post
+});
+
+const create_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const { name, avatar, uidList } = body || {};
+  const id = getNextId("sessions");
+  db.prepare(
+    "INSERT INTO sessions (id, name, avatar, type, lastMsg, time, unread, aiEnabled) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+  ).run(id, name || "", avatar || "\u{1F465}", 2, "", Date.now(), 0, 0);
+  const now = Date.now();
+  const memberUids = Array.from(/* @__PURE__ */ new Set([tokenUser.uid, ...Array.isArray(uidList) ? uidList.map((u) => Number(u)) : []]));
+  const insertMember = db.prepare(
+    "INSERT INTO group_members (uid, sessionId, username, avatar, role, onlineStatus, joinTime) VALUES (?, ?, ?, ?, ?, ?, ?)"
+  );
+  for (const uid of memberUids) {
+    const u = db.prepare("SELECT name, avatar, onlineStatus FROM users WHERE uid = ?").get(uid);
+    insertMember.run(uid, id, (u == null ? void 0 : u.name) || "\u672A\u77E5\u7528\u6237", (u == null ? void 0 : u.avatar) || "\u{1F464}", uid === tokenUser.uid ? 1 : 3, (u == null ? void 0 : u.onlineStatus) || 1, now);
+  }
+  return success({ group_id: id });
+});
+
+const create_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: create_do_post
+});
+
+const disband_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const gid = Number(body == null ? void 0 : body.group_id);
+  db.prepare("DELETE FROM sessions WHERE id = ?").run(gid);
+  db.prepare("DELETE FROM group_members WHERE sessionId = ?").run(gid);
+  db.prepare("DELETE FROM messages WHERE sessionId = ?").run(gid);
+  return success(null);
+});
+
+const disband_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: disband_do_post
+});
+
+const infoNew_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const group_id = Number(body == null ? void 0 : body.group_id);
+  const session = db.prepare("SELECT * FROM sessions WHERE id = ? AND type = 2").get(group_id);
+  const members = db.prepare("SELECT * FROM group_members WHERE sessionId = ?").all(group_id);
+  const mappedMembers = members.map((m) => ({
+    uid: m.uid,
+    username: m.username,
+    avatar: m.avatar,
+    role: m.role,
+    onlineStatus: m.onlineStatus,
+    joinTime: m.joinTime
+  }));
+  return success({
+    group_id,
+    name: (session == null ? void 0 : session.name) || "",
+    avatar: (session == null ? void 0 : session.avatar) || "",
+    notice: "",
+    user_num: mappedMembers.length,
+    members: mappedMembers
+  });
+});
+
+const infoNew_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: infoNew_do_post
+});
+
+const listNew_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  const rows = db.prepare("SELECT * FROM sessions WHERE type = 2").all();
+  const list = rows.map((s) => ({
+    group_id: s.id,
+    name: s.name,
+    avatar: s.avatar,
+    user_num: 1
+  }));
+  return success(listResponse(list, "", true));
+});
+
+const listNew_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: listNew_do_post
+});
+
+const quit_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const gid = Number(body == null ? void 0 : body.group_id);
+  db.prepare("DELETE FROM sessions WHERE id = ?").run(gid);
+  db.prepare("DELETE FROM group_members WHERE sessionId = ?").run(gid);
+  return success(null);
+});
+
+const quit_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: quit_do_post
+});
+
+const remove_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const { group_id, uidList } = body || {};
+  const gid = Number(group_id);
+  const del = db.prepare("DELETE FROM group_members WHERE sessionId = ? AND uid = ?");
+  for (const raw of Array.isArray(uidList) ? uidList : []) {
+    del.run(gid, Number(raw));
+  }
+  return success(null);
+});
+
+const remove_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: remove_do_post
+});
+
+const searchPage_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const keyword = (body == null ? void 0 : body.keyword) || "";
+  const rows = db.prepare("SELECT * FROM sessions WHERE type = 2 AND name LIKE ?").all(`%${keyword}%`);
+  const list = rows.map((s) => ({
+    group_id: s.id,
+    name: s.name,
+    avatar: s.avatar,
+    user_num: 1
+  }));
+  return success(listResponse(list, "", true));
+});
+
+const searchPage_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: searchPage_do_post
+});
+
+const update_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const { group_id, name, avatar } = body || {};
+  const gid = Number(group_id);
+  db.prepare("UPDATE sessions SET name = COALESCE(?, name), avatar = COALESCE(?, avatar) WHERE id = ?").run(
+    name != null ? name : null,
+    avatar != null ? avatar : null,
+    gid
+  );
+  return success(null);
+});
+
+const update_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: update_do_post
+});
+
+const updateNotice_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const updateNotice_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: updateNotice_do_post
+});
+
+const clear_do_post = defineEventHandler(async (event) => {
+  var _a;
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const session_id = body == null ? void 0 : body.session_id;
+  const sid = Number((_a = String(session_id).split("@").pop()) == null ? void 0 : _a.split("_")[0]);
+  if (sid) {
+    db.prepare("DELETE FROM messages WHERE sessionId = ?").run(sid);
+  }
+  return success(null);
+});
+
+const clear_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: clear_do_post
+});
+
+const offlineAndTop_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const offlineAndTop_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: offlineAndTop_do_post
+});
+
+const read_do_post = defineEventHandler(async (event) => {
+  var _a;
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const session_id = body == null ? void 0 : body.session_id;
+  const sid = Number((_a = String(session_id).split("@").pop()) == null ? void 0 : _a.split("_")[0]);
+  if (sid) {
+    db.prepare("UPDATE sessions SET unread = 0 WHERE id = ?").run(sid);
+  }
+  return success(null);
+});
+
+const read_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: read_do_post
+});
+
+const readMsg_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const readMsg_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: readMsg_do_post
+});
+
+const remind_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const remind_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: remind_do_post
+});
+
+const remindList_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const remindList_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: remindList_do_post
+});
+
+const status_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success({ read: 0, unread: 0 });
+});
+
+const status_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: status_do_post
+});
+
+const sync_do_post = defineEventHandler(async (event) => {
+  var _a;
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const session_id = body == null ? void 0 : body.session_id;
+  const last_msg_id = Number(body == null ? void 0 : body.last_msg_id) || 0;
+  const size = Number(body == null ? void 0 : body.size) || 20;
+  const sid = Number((_a = String(session_id).split("@").pop()) == null ? void 0 : _a.split("_")[0]);
+  let rows;
+  if (last_msg_id > 0) {
+    rows = db.prepare(
+      "SELECT * FROM messages WHERE sessionId = ? AND id < ? ORDER BY id DESC LIMIT ?"
+    ).all(sid, last_msg_id, size);
+  } else {
+    rows = db.prepare(
+      "SELECT * FROM messages WHERE sessionId = ? ORDER BY id DESC LIMIT ?"
+    ).all(sid, size);
+  }
+  rows.reverse();
+  const ytList = rows.map((m) => ({
+    msg_id: m.id,
+    uuid: `u${m.id}`,
+    seq: m.id,
+    session_id: `p@${m.sessionId}_${tokenUser.uid}`,
+    from_id: String(m.fromUid),
+    content: m.content,
+    time: m.sendTime,
+    status: 2,
+    type: 0,
+    chat_type: "p",
+    keyword: "",
+    unread: 0,
+    name: m.fromName,
+    headUrl: m.fromAvatar,
+    state: ""
+  }));
+  const isLast = ytList.length < size;
+  const cursor = ytList.length ? String(ytList[0].msg_id) : "";
+  return success(listResponse(ytList, cursor, isLast));
+});
+
+const sync_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: sync_do_post
+});
+
+const top_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const top_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: top_do_post
+});
+
+const topList_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const topList_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: topList_do_post
+});
+
+const unReadNum_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  const row = db.prepare("SELECT COALESCE(SUM(unread), 0) as total FROM sessions").get();
+  return success({ total: (row == null ? void 0 : row.total) || 0 });
+});
+
+const unReadNum_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: unReadNum_do_post
+});
+
+const withdraw_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const withdraw_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: withdraw_do_post
+});
+
+const emp_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const emp_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: emp_do_post
+});
+
+const listYxt_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const listYxt_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: listYxt_do_post
+});
+
 const plugin_put = defineEventHandler(async (event) => {
   const authHeader = getHeader(event, "authorization");
   const user = verifyToken(authHeader);
@@ -2731,6 +3477,116 @@ const list_get$1 = /*#__PURE__*/Object.freeze({
   default: list_get
 });
 
+const del_post = defineEventHandler(async (event) => {
+  var _a;
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const body = await readBody(event);
+  const session_id = body == null ? void 0 : body.session_id;
+  const sid = Number((_a = String(session_id).split("@").pop()) == null ? void 0 : _a.split("_")[0]);
+  if (sid) {
+    db.prepare("DELETE FROM sessions WHERE id = ?").run(sid);
+  }
+  return success(null);
+});
+
+const del_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: del_post
+});
+
+const list_post$2 = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  const uid = tokenUser.uid;
+  const rows = db.prepare("SELECT * FROM sessions ORDER BY time DESC").all();
+  const ytList = rows.map((s) => ({
+    session_id: `p@${s.id}_${uid}`,
+    from_id: String(s.id),
+    time: s.time,
+    chat_type: s.type === 2 ? "g" : "p",
+    chat_name: s.name,
+    type: 0,
+    content: s.lastMsg,
+    unread_num: s.unread,
+    head: 0,
+    headUrl: s.avatar,
+    sign: "",
+    mobile: "",
+    state: -1,
+    online: "",
+    frequent: 0,
+    notice: "",
+    user_num: s.type === 2 ? 1 : 0
+  }));
+  return success(listResponse(ytList, "", true));
+});
+
+const list_post$3 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: list_post$2
+});
+
+const close_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const close_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: close_post
+});
+
+const list_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const list_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: list_post
+});
+
+const open_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const open_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: open_post
+});
+
+const reset_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event);
+  return success(null);
+});
+
+const reset_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: reset_post
+});
+
 const info_get = defineEventHandler((event) => {
   const authHeader = getHeader(event, "authorization");
   const tokenUser = verifyToken(authHeader);
@@ -2830,6 +3686,34 @@ const logout_post$1 = /*#__PURE__*/Object.freeze({
   default: logout_post
 });
 
+const onlines_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success({ list: [] });
+});
+
+const onlines_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: onlines_do_post
+});
+
+const onlineStatus_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success({ online: 1 });
+});
+
+const onlineStatus_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: onlineStatus_post
+});
+
 const register_post = defineEventHandler(async (event) => {
   const body = await readBody(event);
   const { name, email, password } = body;
@@ -2905,5 +3789,67 @@ const sendCode_post = defineEventHandler(async (event) => {
 const sendCode_post$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
   default: sendCode_post
+});
+
+const meetingInfo_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  await readBody(event).catch(() => ({}));
+  return success(listResponse([], "", true));
+});
+
+const meetingInfo_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: meetingInfo_post
+});
+
+const login_do_post = defineEventHandler(async (event) => {
+  const body = await readBody(event);
+  const { account, password, deviceId } = body || {};
+  if (!account || !password) {
+    return fail("\u8D26\u53F7\u548C\u5BC6\u7801\u4E0D\u80FD\u4E3A\u7A7A");
+  }
+  const user = db.prepare(
+    "SELECT * FROM users WHERE email = ? OR phone = ? OR name = ?"
+  ).get(account, account, account);
+  if (!user) {
+    return fail("\u7528\u6237\u4E0D\u5B58\u5728", 404);
+  }
+  if (!comparePassword(password, user.password)) {
+    return fail("\u5BC6\u7801\u9519\u8BEF", 401);
+  }
+  const token = generateToken(user.uid);
+  db.prepare("UPDATE users SET onlineStatus = 1, lastOptTime = ? WHERE uid = ?").run(Date.now(), user.uid);
+  const userInfo = {
+    uid: String(user.uid),
+    name: user.name,
+    headUrl: user.avatar,
+    mobile: user.phone,
+    email: user.email,
+    sign: "",
+    online: String(user.onlineStatus)
+  };
+  return success({ userInfo, token, deviceId: deviceId || "" }, "\u767B\u5F55\u6210\u529F");
+});
+
+const login_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: login_do_post
+});
+
+const logout_do_post = defineEventHandler(async (event) => {
+  const tokenUser = verifyToken(getHeader(event, "authorization"));
+  if (!tokenUser) {
+    return fail("\u672A\u767B\u5F55\u6216\u767B\u5F55\u5DF2\u8FC7\u671F", 401);
+  }
+  db.prepare("UPDATE users SET onlineStatus = 2 WHERE uid = ?").run(tokenUser.uid);
+  return success(null, "\u9000\u51FA\u767B\u5F55\u6210\u529F");
+});
+
+const logout_do_post$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  default: logout_do_post
 });
 //# sourceMappingURL=index.mjs.map

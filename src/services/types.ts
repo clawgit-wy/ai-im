@@ -4,6 +4,7 @@
  * @see TSDoc规范 https://tsdoc.org/
  **/
 import { AITypeEnum, ChatTypeEnum, MsgEnum, OnlineEnum, PluginStatusEnum, RoleEnum } from '@/enums'
+import type { ChatTypeListEnum, MsgStatusEnum, MsgTypeEnum } from '@/enums'
 
 /** 统一API响应体 */
 export type ApiResponse<T = any> = {
@@ -500,4 +501,224 @@ export type PluginReq = {
   config: Record<string, any>
   /** 是否启用 */
   enabled: boolean
+}
+
+/* ======================================================== */
+/*          yutong-im 规范类型 (对应 DESIGN.md 4.2)         */
+/*   这些类型与 yutong-im 后端接口字段完全一致，用于直接替换  */
+/* ======================================================== */
+
+/**
+ * yutong-im 会话实体 (对应文档 4.2.1)
+ * 接口：POST /api/session/list
+ */
+export type YTSession = {
+  /** 会话唯一 ID (类型@用户1_用户2) */
+  session_id: string
+  /** 对方用户ID */
+  from_id: string
+  /** 最后消息时间戳 */
+  time: number
+  /** 会话类型 p=个人, g=群组, s=服务号, t=通知, r=机器人 */
+  chat_type: ChatTypeListEnum
+  /** 会话名称 */
+  chat_name: string
+  /** 最后消息类型 */
+  type: MsgTypeEnum
+  /** 最后消息内容 */
+  content: string
+  /** 未读数量 */
+  unread_num: number
+  /** 是否置顶 (0=否, 1=是) */
+  head: number
+  /** 头像URL */
+  headUrl: string
+  /** 内线电话 */
+  sign: string
+  /** 手机号 */
+  mobile: string
+  /** 状态 (-1=无, 0=会议中, 1=休假中, 2=出差中, 3=暂离) */
+  state: number
+  /** 在线设备 */
+  online: string
+  /** 是否常用联系人 */
+  frequent: number
+  /** 群公告 */
+  notice: string
+  /** 群成员数 */
+  user_num: number
+}
+
+/**
+ * yutong-im 消息实体 (对应文档 4.2.2)
+ * 接口：POST /api/msg/sync.do
+ */
+export type YTMessage = {
+  /** 消息唯一ID */
+  msg_id: number
+  /** 消息UUID (客户端用) */
+  uuid: string
+  /** 消息序列号 */
+  seq: number
+  /** 会话ID */
+  session_id: string
+  /** 发送者ID */
+  from_id: string
+  /** 消息内容 */
+  content: string
+  /** 本地文件路径 */
+  local_uri?: string
+  /** 发送时间戳 */
+  time: number
+  /** 语音时长(秒) */
+  duration?: number
+  /** 消息状态 0=默认 1=发送中 2=成功 3=失败 */
+  status: MsgStatusEnum
+  /** 消息类型 (见 MsgTypeEnum) */
+  type: MsgTypeEnum
+  /** 会话类型 */
+  chat_type: ChatTypeListEnum
+  /** 消息关键字(用于搜索) */
+  keyword: string
+  /** 未读状态 */
+  unread: number
+  /** 发送者显示名 */
+  name: string
+  /** 发送者头像 */
+  headUrl: string
+  /** 发送者状态 */
+  state: string
+}
+
+/* ======================================================== */
+/*                请求参数类型 (文档第五部分)                 */
+/* ======================================================== */
+
+/** 登录请求 (POST /mercy/app/auth/login.do) */
+export type YTLoginReq = {
+  /** 账号 */
+  account: string
+  /** 密码 (DES-CBC + Base64 加密) */
+  password: string
+  /** 应用版本 */
+  appVersion: string
+  /** 设备ID */
+  deviceId: string
+}
+
+/** 登录响应 */
+export type YTLoginRes = {
+  /** 用户信息 */
+  userInfo: YTUserInfo
+  /** 访问令牌 */
+  token: string
+  /** 设备ID */
+  deviceId: string
+}
+
+/** yutong-im 用户信息 */
+export type YTUserInfo = {
+  /** 用户ID */
+  uid: string
+  /** 用户名 */
+  name: string
+  /** 头像URL */
+  headUrl: string
+  /** 手机号 */
+  mobile: string
+  /** 邮箱 */
+  email: string
+  /** 签名 */
+  sign: string
+  /** 在线状态 */
+  online: string
+}
+
+/** 会话列表请求 (POST /api/session/list) */
+export type YTSessionListReq = {
+  /** 页码 */
+  page?: number
+  /** 每页数量 */
+  size?: number
+}
+
+/** 消息同步请求 (POST /api/msg/sync.do) */
+export type YTMsgSyncReq = {
+  /** 会话ID */
+  session_id: string
+  /** 最后一条消息ID */
+  last_msg_id?: number
+  /** 每页数量 */
+  size?: number
+}
+
+/** 消息已读请求 (POST /api/msg/read.do) */
+export type YTMsgReadReq = {
+  /** 会话ID */
+  session_id: string
+}
+
+/** 消息已读上报请求 (POST /api/msg/readMsg.do) */
+export type YTMsgReadMsgReq = {
+  /** 消息ID列表 */
+  msg_ids: number[]
+}
+
+/** 消息撤回请求 (POST /api/msg/withdraw.do) */
+export type YTMsgWithdrawReq = {
+  /** 消息ID */
+  msg_id: number
+  /** 会话ID */
+  session_id: string
+}
+
+/** 创建群组请求 (POST /api/group/create.do) */
+export type YTCreateGroupReq = {
+  /** 群名称 */
+  name: string
+  /** 群头像 */
+  avatar: string
+  /** 成员uid列表 */
+  uidList: string[]
+}
+
+/** 群成员管理请求 (POST /api/group/add.do | /api/group/remove.do) */
+export type YTGroupMemberReq = {
+  /** 群组ID */
+  group_id: string
+  /** 成员uid列表 */
+  uidList: string[]
+}
+
+/** 联系人信息请求 (POST /api/contact/info.do) */
+export type YTContactInfoReq = {
+  /** 用户ID */
+  uid: string
+}
+
+/** 搜索人员请求 (POST /api/contact/search.do) */
+export type YTContactSearchReq = {
+  /** 搜索关键字 */
+  keyword: string
+  /** 页码 */
+  page?: number
+  /** 每页数量 */
+  size?: number
+}
+
+/* ======================================================== */
+/*                适配器映射类型 (raw <-> app)              */
+/*   用于在 yutong-im 原始类型与应用内部类型之间转换          */
+/* ======================================================== */
+
+/** yutong-im 列表响应 (统一包装) */
+export type YTListResponse<T> = {
+  /** 列表数据 */
+  list: T[]
+  /** 总数 */
+  total?: number
+  /** 是否最后一页 */
+  isLast?: boolean
+  /** 游标 */
+  cursor?: string
 }

@@ -628,6 +628,73 @@ export function useChat() {
     }
   }
 
+  /**
+   * 导出当前对话消息为文本文件
+   * @param chatId 对话ID
+   */
+  function exportChat(chatId: number) {
+    const chat = chatList.value.find((c) => c.id === chatId)
+    const msgs = messagesMap[chatId] || []
+    if (msgs.length === 0) {
+      window.$message?.warning('当前对话没有消息可导出')
+      return
+    }
+    const lines = msgs.map((m) => {
+      const sender = m.system ? '[系统]' : m.name || '未知'
+      return `[${m.time}] ${sender}: ${m.text}`
+    })
+    const content = `对话: ${chat?.name || '未知'}\n导出时间: ${new Date().toLocaleString()}\n共 ${msgs.length} 条消息\n${'='.repeat(40)}\n${lines.join('\n')}`
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${chat?.name || '对话'}_${new Date().toISOString().slice(0, 10)}.txt`
+    a.click()
+    URL.revokeObjectURL(url)
+    window.$message?.success(`已导出 ${msgs.length} 条消息`)
+  }
+
+  /**
+   * 复制当前对话消息到剪贴板
+   * @param chatId 对话ID
+   */
+  async function copyChat(chatId: number) {
+    const msgs = messagesMap[chatId] || []
+    if (msgs.length === 0) {
+      window.$message?.warning('当前对话没有消息可复制')
+      return
+    }
+    const text = msgs.map((m) => {
+      const sender = m.system ? '[系统]' : m.name || '未知'
+      return `[${m.time}] ${sender}: ${m.text}`
+    }).join('\n')
+    try {
+      await navigator.clipboard.writeText(text)
+      window.$message?.success(`已复制 ${msgs.length} 条消息`)
+    } catch {
+      window.$message?.error('复制失败，请检查浏览器剪贴板权限')
+    }
+  }
+
+  /**
+   * 切换筛选类型并同步当前选中对话
+   * 切换后若当前对话不在过滤结果中，自动选中第一个匹配的对话
+   * @param type 筛选类型
+   */
+  async function changeFilter(type: 'all' | 'single' | 'group') {
+    currentFilter.value = type
+    // 等待响应式更新后检查当前对话是否仍可见
+    await nextTick()
+    const visible = filteredChats.value.some((c) => c.id === currentChatId.value)
+    if (!visible) {
+      if (filteredChats.value.length > 0) {
+        await selectChat(filteredChats.value[0].id)
+      } else {
+        currentChatId.value = 0
+      }
+    }
+  }
+
   return {
     // 状态
     chatList,
@@ -666,6 +733,9 @@ export function useChat() {
     joinGroup,
     togglePin,
     toggleMute,
-    removeSession
+    removeSession,
+    exportChat,
+    copyChat,
+    changeFilter
   }
 }
