@@ -293,14 +293,6 @@ export type CreateGroupReq = {
   uidList: number[]
 }
 
-/** 添加群成员请求 */
-export type AddMemberReq = {
-  /** 会话ID */
-  sessionId: number
-  /** 成员uid列表 */
-  uidList: number[]
-}
-
 /* ======================================================== */
 /*                       日程相关类型                         */
 /* ======================================================== */

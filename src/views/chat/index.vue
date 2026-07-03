@@ -10,7 +10,8 @@
         @select="handleSelectChat"
         @filter="handleFilter"
         @search="handleSearch"
-        @add="showCreateMenu" />
+        @add="showCreateMenu"
+        @context-action="handleContextAction" />
     </div>
 
     <!-- ========== 右侧聊天区域 ========== -->
@@ -568,8 +569,6 @@ function handleContextAction(action: string, item: any): void {
     showRemoveConfirm.value = true
   }
 }
-// 标记为已使用（模板中通过 @context-action 引用）
-void handleContextAction
 
 function confirmRemoveSession() {
   removeSession(pendingRemoveId.value)
@@ -802,11 +801,6 @@ function memberStyle(member: Member) {
 
 .chat-type-card:hover {
   border-color: #13987f;
-}
-
-.chat-type-card.selected {
-  border-color: #13987f;
-  background: rgba(19, 152, 127, 0.04);
 }
 
 .chat-type-icon {

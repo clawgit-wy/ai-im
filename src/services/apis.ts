@@ -14,8 +14,7 @@ import {
   ChatTypeListEnum,
   ChatTypeEnum,
   MsgEnum,
-  MsgStatusEnum,
-  MsgTypeEnum
+  MsgStatusEnum
 } from '@/enums'
 import type {
   Agent,
@@ -88,6 +87,7 @@ function adaptSession(raw: YTSession): Session {
 
 /** YTMessage -> 应用 MessageType */
 function adaptMessage(raw: YTMessage): MessageType {
+  const sendTime = Number(raw.time) || Date.now()
   return {
     fromUser: {
       uid: Number(raw.from_id) || 0,
@@ -99,10 +99,10 @@ function adaptMessage(raw: YTMessage): MessageType {
       sessionId: Number(raw.session_id?.split('@').pop()?.split('_')[0]) || 0,
       type: MsgEnum.TEXT,
       body: { content: raw.content },
-      sendTime: raw.time,
+      sendTime,
       messageMark: { userLike: 0, userDislike: 0, likeCount: 0, dislikeCount: 0 }
     },
-    sendTime: new Date(raw.time).toLocaleTimeString(),
+    sendTime: new Date(sendTime).toLocaleTimeString(),
     loading: raw.status === MsgStatusEnum.SENDING
   }
 }
@@ -254,17 +254,32 @@ export default {
 
   /**
    * 发送消息
-   * 文档中发送走 WebSocket(4.3.2)，HTTP 侧无独立发送接口；
-   * 此处保留兼容，内部走 msg/sync.do 同步
+   * 调用 /api/chat/msg 接口，将消息写入数据库并通过 WebSocket 广播
    */
   sendMsg: (data: SendMsgReq): Promise<MessageType> =>
-    POST(`${prefix}/api/msg/sync.do`, {
-      session_id: String(data.sessionId),
-      content: data.body.content,
-      type: MsgTypeEnum.TXT
-    } as YTMsgSyncReq).then((res: YTListResponse<YTMessage>) => {
-      const raw = res.list?.[0]
-      return adaptMessage(raw || ({} as YTMessage))
+    POST(`${prefix}/api/chat/msg`, {
+      sessionId: data.sessionId,
+      msgType: data.msgType,
+      body: data.body
+    }).then((res: any) => {
+      // 后端返回 { fromUser, message, sendTime } 结构
+      return {
+        fromUser: {
+          uid: res.fromUser?.uid || 0,
+          username: res.fromUser?.username || '',
+          avatar: res.fromUser?.avatar || ''
+        },
+        message: {
+          id: res.message?.id || 0,
+          sessionId: res.message?.sessionId || data.sessionId,
+          type: res.message?.type || MsgEnum.TEXT,
+          body: res.message?.body || { content: data.body.content },
+          sendTime: res.message?.sendTime || Date.now(),
+          messageMark: res.message?.messageMark || { userLike: 0, userDislike: 0, likeCount: 0, dislikeCount: 0 }
+        },
+        sendTime: res.sendTime || new Date().toLocaleTimeString(),
+        loading: false
+      } as MessageType
     }),
 
   /** 接收消息(轮询，复用 sync) */

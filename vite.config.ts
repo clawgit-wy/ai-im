@@ -64,8 +64,7 @@ export default defineConfig(({ mode }: ConfigEnv) => {
           comments: false // 移除所有注释
         },
         compress: {
-          drop_console: true, // 移除 console.log
-          drop_debugger: true // 移除 debugger
+          drop_debugger: true // 仅移除 debugger，保留 console 便于 Tauri 端调试
         }
       })
     ],
@@ -95,11 +94,11 @@ export default defineConfig(({ mode }: ConfigEnv) => {
       // (文档第五部分接口前缀为 /api/ 与 /mercy/app/)
       proxy: {
         '/api': {
-          target: 'http://localhost:3001',
+          target: 'http://127.0.0.1:3001',
           changeOrigin: true
         },
         '/mercy': {
-          target: 'http://localhost:3001',
+          target: 'http://127.0.0.1:3001',
           changeOrigin: true
         }
       },

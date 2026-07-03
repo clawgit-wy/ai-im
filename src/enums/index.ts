@@ -152,48 +152,6 @@ export enum MsgStatusEnum {
 }
 
 /**
- * WebSocket 消息类型 (长连接，对应文档 4.2.6)
- */
-export enum SocketMsgTypeEnum {
-  /** 建立连接 */
-  CONNECT = 1,
-  /** 断开连接 */
-  DISCONNECT = 2,
-  /** 心跳 */
-  HEARTBEAT = 3,
-  /** 聊天消息 */
-  CHAT = 5,
-  /** 推送消息 */
-  PUSH = 6,
-  /** 消息已读 */
-  READED = 7,
-  /** 用户在线状态变更 */
-  ONLINE_CHANGE = 8,
-  /** 群成员变更 */
-  MEMBER_CHANGE = 9,
-  /** 会话置顶 */
-  SESSION_TOP = 10,
-  /** 未读数变更 */
-  UNREAD_CHANGE = 11,
-  /** 消息撤回 */
-  WITHDRAW = 16,
-  /** 连接设备变更 */
-  DEVICE_CHANGE = 17,
-  /** 消息提醒 */
-  REMIND = 18,
-  /** 退出设备 */
-  LOGOUT = 19,
-  /** 删除会话 */
-  SESSION_DEL = 20,
-  /** 版本更新 */
-  VERSION_UPDATE = 32,
-  /** 视频会议通知 */
-  MEETING_NOTIFY = 33,
-  /** 系统通知 */
-  SYSTEM_NOTIFY = 48
-}
-
-/**
  * 在线状态
  */
 export enum OnlineEnum {

@@ -200,7 +200,16 @@ export function useChat() {
       if (currentChatId.value !== sessionId) {
         chat.unread = (chat.unread || 0) + 1
       }
+    } else {
+      // 会话不在本地列表中（可能是对方创建的新会话），刷新会话列表
+      fetchChatList()
     }
+  })
+
+  // 监听会话更新通知（群组创建、新会话等）
+  Mitt.on(MittEnum.UPDATE_UNREAD, () => {
+    // 刷新会话列表以获取新创建的会话
+    fetchChatList()
   })
 
   /** 筛选后的对话列表 */
@@ -326,8 +335,11 @@ export function useChat() {
         msgType: MsgEnum.TEXT,
         body: { content }
       })
-      // 将返回的消息添加到列表
-      messagesMap[chatId].push(mapMessage(res, currentUid.value))
+      const newMsg = mapMessage(res, currentUid.value)
+      // 避免与WebSocket推送重复（WebSocket可能先于HTTP响应到达）
+      if (!messagesMap[chatId].some((m) => m.id === newMsg.id)) {
+        messagesMap[chatId].push(newMsg)
+      }
 
       // 更新对话列表最后消息
       const chat = chatList.value.find((c) => c.id === chatId)
@@ -403,13 +415,14 @@ export function useChat() {
     }
 
     try {
-      // 调用后端创建会话
+      // 调用后端创建会话（传入 targetUid 以建立双方会话关系）
       const res = await apis.createSession({
         name: contact.name,
         avatar: contact.avatar,
         type: ChatTypeEnum.SINGLE,
-        aiEnabled: false
-      })
+        aiEnabled: false,
+        targetUid: contactId
+      } as any)
       const newChat = mapSession(res)
       chatList.value.unshift(newChat)
       messagesMap[newChat.id] = []

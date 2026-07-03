@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "identifier": "com.ai-im.app",
   "build": {
-    "beforeDevCommand": "pnpm dev",
-    "beforeBuildCommand": "pnpm build",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist",
     "devUrl": "http://127.0.0.1:6130"
   },

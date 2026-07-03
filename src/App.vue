@@ -11,6 +11,7 @@ import { useSettingStore } from '@/stores/setting.ts'
 import { StoresEnum, ThemeEnum } from '@/enums'
 import Mitt from '@/utils/Bus'
 import { MittEnum } from '@/enums'
+import { isTauri } from '@/utils/tauri'
 
 const settingStore = useSettingStore()
 const { themes, windowShadow, fontSize } = storeToRefs(settingStore)
@@ -44,16 +45,41 @@ Mitt.on(MittEnum.TOGGLE_THEME, (theme: any) => {
   }
 })
 
+/**
+ * DevTools 快捷键处理
+ * - macOS: Cmd+Option+I 或 Cmd+D
+ * - Windows/Linux: Ctrl+Shift+I 或 F12
+ * 仅在 Tauri 环境下生效
+ */
+function handleDevtoolsShortcut(e: KeyboardEvent) {
+  const isMac = navigator.platform.toUpperCase().includes('MAC')
+  const toggleKey =
+    (isMac && (e.metaKey && (e.altKey || e.key === 'd'))) ||
+    (!isMac && e.ctrlKey && e.shiftKey && e.key === 'I') ||
+    e.key === 'F12'
+
+  if (!toggleKey) return
+  if (!isTauri()) return
+
+  e.preventDefault()
+  import('@tauri-apps/api/core')
+    .then(({ invoke }) => invoke('toggle_devtools'))
+    .catch((err) => console.error('[DevTools] 打开失败:', err))
+}
+
 onMounted(() => {
   // 判断localStorage中是否有设置主题
   if (!localStorage.getItem(StoresEnum.SETTING)) {
     settingStore.initTheme(ThemeEnum.OS)
   }
   document.documentElement.dataset.theme = themes.value.content
+  // 注册 DevTools 快捷键
+  window.addEventListener('keydown', handleDevtoolsShortcut)
 })
 
 onUnmounted(() => {
   Mitt.off(MittEnum.TOGGLE_THEME)
+  window.removeEventListener('keydown', handleDevtoolsShortcut)
 })
 </script>
 

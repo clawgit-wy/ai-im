@@ -1,6 +1,7 @@
 /**
  * 会话列表
  * 文档：POST /api/session/list
+ * 只返回当前用户参与的会话（通过 group_members 表关联）
  * 将 DBSession 映射为 YTSession
  */
 export default defineEventHandler(async (event) => {
@@ -10,7 +11,24 @@ export default defineEventHandler(async (event) => {
   }
   const uid = tokenUser.uid
 
-  const rows = db.prepare('SELECT * FROM sessions ORDER BY time DESC').all() as DBSession[]
+  // 查询当前用户参与的所有会话ID
+  const memberSessions = db.prepare(
+    'SELECT sessionId FROM group_members WHERE uid = ?'
+  ).all(uid) as { sessionId: number }[]
+
+  const sessionIds = memberSessions.map((m) => m.sessionId)
+
+  let rows: DBSession[]
+  if (sessionIds.length > 0) {
+    // 用户有参与会话：只返回这些会话
+    const placeholders = sessionIds.map(() => '?').join(',')
+    rows = db.prepare(
+      `SELECT * FROM sessions WHERE id IN (${placeholders}) ORDER BY time DESC`
+    ).all(...sessionIds) as DBSession[]
+  } else {
+    // 兼容：用户无任何成员记录时返回空列表
+    rows = []
+  }
 
   const ytList = rows.map((s) => ({
     session_id: `p@${s.id}_${uid}`,

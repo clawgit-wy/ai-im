@@ -26,5 +26,16 @@ export default defineEventHandler(async (event) => {
     insertMember.run(uid, id, u?.name || '未知用户', u?.avatar || '👤', uid === tokenUser.uid ? 1 : 3, u?.onlineStatus || 1, now)
   }
 
+  // 通过 WebSocket 通知所有被邀请的成员（创建者自己会在本地直接看到）
+  for (const uid of memberUids) {
+    if (uid !== tokenUser.uid) {
+      notifyUser(uid, {
+        type: 'session',
+        sessionId: id,
+        data: { type: 'session_update', data: { sessionId: id, action: 'created' } }
+      })
+    }
+  }
+
   return success({ group_id: id })
 })

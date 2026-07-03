@@ -6,11 +6,6 @@ import type { ApiResponse } from '@/services/types'
  * - Tauri 环境：使用 @tauri-apps/plugin-http 的 fetch（绕过浏览器 CORS 限制）
  * - 浏览器 / Mock 环境：使用原生 fetch，配合本地 Mock Server（已开启 CORS）
  */
-const tauriFetch = async (): Promise<typeof fetch> => {
-  if (!isTauri()) return window.fetch.bind(window)
-  const { fetch } = await import('@tauri-apps/plugin-http')
-  return fetch
-}
 
 /**
  * @description 请求参数
@@ -38,19 +33,23 @@ export type HttpParams = {
  * @returns {Promise<T>} 请求结果
  */
 async function Http<T>(url: string, options: HttpParams, fullResponse?: boolean): Promise<T> {
-  // 构建请求头
-  const httpHeaders = new Headers(options.headers || {})
+  const inTauri = isTauri()
+  console.log('[HTTP] 开始请求:', options.method, url, 'isTauri:', inTauri)
+
+  // 构建请求头（Tauri HTTP 插件对 Headers 对象兼容性更好）
+  const httpHeaders: Record<string, string> = { ...(options.headers || {}) }
 
   // 构建 fetch 请求选项
-  const fetchOptions: RequestInit = {
+  const fetchOptions: any = {
     method: options.method,
     headers: httpHeaders
   }
 
   // 判断是否需要添加请求体
-  if (options.body) {
+  if (options.body !== undefined && options.body !== null) {
     if (!(options.body instanceof FormData || options.body instanceof URLSearchParams)) {
       fetchOptions.body = JSON.stringify(options.body)
+      console.log('[HTTP] 请求体:', fetchOptions.body)
     } else {
       fetchOptions.body = options.body
     }
@@ -63,22 +62,59 @@ async function Http<T>(url: string, options: HttpParams, fullResponse?: boolean)
   }
 
   try {
-    const doFetch = await tauriFetch()
+    console.log('[HTTP] fetchOptions:', JSON.stringify({ method: fetchOptions.method, hasBody: !!fetchOptions.body, hasHeaders: !!fetchOptions.headers }))
+
+    // 获取 fetch 实现
+    let doFetch: typeof fetch
+    if (inTauri) {
+      console.log('[HTTP] 使用 Tauri HTTP 插件 fetch')
+      const mod = await import('@tauri-apps/plugin-http')
+      doFetch = mod.fetch
+    } else {
+      console.log('[HTTP] 使用原生 fetch')
+      doFetch = window.fetch.bind(window)
+    }
+
+    console.log('[HTTP] 发起 fetch 调用...')
     const res = await doFetch(url, fetchOptions)
+    console.log('[HTTP] fetch 完成, status:', res.status, 'ok:', res.ok)
 
     if (!res.ok) {
+      const errText = await res.text().catch(() => '')
+      console.error(`[HTTP] 请求失败: ${res.status}`, errText)
       throw new Error(`HTTP error! status: ${res.status}`)
     }
 
-    const data = options.isBlob ? await res.arrayBuffer() : await res.json()
+    let data: any
+    if (options.isBlob) {
+      console.log('[HTTP] 读取 arrayBuffer')
+      data = await res.arrayBuffer()
+    } else {
+      // 统一使用 res.text() + JSON.parse()，兼容 Tauri 和浏览器
+      console.log('[HTTP] 读取响应文本...')
+      let text = await res.text()
+      // Tauri HTTP 插件的 res.text() 可能返回包含 null 字节(\u0000)或 BOM 的文本，
+      // 导致 JSON.parse() 抛出 "Unrecognized token" 错误
+      // 清除 null 字节、BOM 及其他不可见控制字符
+      text = text.replace(/\u0000/g, '').replace(/^\uFEFF/, '').trim()
+      console.log('[HTTP] 响应文本长度:', text.length, '内容预览:', text.substring(0, 200))
+      try {
+        data = text ? JSON.parse(text) : {}
+        console.log('[HTTP] JSON解析成功')
+      } catch (parseErr) {
+        console.error('[HTTP] JSON解析失败:', parseErr, '原始文本:', text)
+        throw new Error(`响应JSON解析失败: ${parseErr}`)
+      }
+    }
 
     if (fullResponse) {
       return { data, resp: res } as any
     }
 
+    console.log('[HTTP] 请求成功, 返回数据')
     return data
   } catch (err) {
-    console.error('HTTP request failed: ', err)
+    console.error(`[HTTP] 请求异常: ${options.method} ${url}`, err)
     throw err
   }
 }

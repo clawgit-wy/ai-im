@@ -73,14 +73,15 @@ wss.on('connection', (ws: WebSocket, request: http.IncomingMessage) => {
 
 /**
  * 向指定会话的所有在线用户广播消息
- * 对于群聊，查询群成员表获取所有成员uid；对于单聊，广播给所有在线用户
+ * 对于群聊和单聊，均查询群成员表获取参与方uid
  */
 function broadcastToSession(sessionId: number, data: any) {
-  const message = JSON.stringify({ type: 'session', sessionId, data })
-  // 查询该会话的群成员
+  // 查询该会话的所有成员（单聊也使用 group_members 表记录参与方）
   const members = db.prepare('SELECT uid FROM group_members WHERE sessionId = ?').all(sessionId) as { uid: number }[]
+  // 构建消息体：保留 data 内部的 type 字段（如 'message'），外层用统一格式
+  const message = JSON.stringify({ type: 'session', sessionId, data })
   if (members.length > 0) {
-    // 群聊：发送给群成员中在线的用户
+    // 有成员记录：发送给在线成员
     for (const { uid } of members) {
       const ws = wsConnections.get(uid)
       if (ws && ws.readyState === WebSocket.OPEN) {
@@ -88,7 +89,7 @@ function broadcastToSession(sessionId: number, data: any) {
       }
     }
   } else {
-    // 单聊：广播给所有在线用户（前端根据 sessionId 过滤）
+    // 无成员记录（兼容旧数据）：广播给所有在线用户
     for (const [, ws] of wsConnections) {
       if (ws.readyState === WebSocket.OPEN) {
         ws.send(message)

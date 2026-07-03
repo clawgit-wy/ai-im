@@ -18,14 +18,20 @@ export function useWebSocket() {
   function buildWsUrl(): string {
     const token = computedToken.get()
     if (!token) return ''
-    // 开发环境：通过Vite代理或直连后端
+    // 开发环境：直连Nitro后端(3001)；生产环境/Tauri：通过VITE_WEBSOCKET_URL或当前host
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
     const host = window.location.hostname
     const port = window.location.port
-    // 如果是开发服务器(6130)，直连后端3000
+    // 开发服务器(6130)直连后端3001（使用 127.0.0.1 避免 IPv6 解析问题）
     if (port === '6130') {
-      return `ws://localhost:3000/ws?token=${token}`
+      return `ws://127.0.0.1:3001/ws?token=${token}`
     }
+    // Tauri 环境：使用环境变量配置的 WebSocket 地址
+    const wsUrl = import.meta.env.VITE_WEBSOCKET_URL
+    if (wsUrl) {
+      return `${wsUrl}?token=${token}`
+    }
+    // 兜底：使用当前host
     return `${protocol}//${host}:${port}/ws?token=${token}`
   }
 
@@ -92,16 +98,47 @@ export function useWebSocket() {
   function handleMessage(data: any) {
     if (data.type === 'pong') return
 
-    // 新消息推送
+    // 会话级推送（消息/会话更新等）
+    // 服务器格式: { type: 'session', sessionId, data: { type: 'message'|..., ... } }
+    if (data.type === 'session' && data.data) {
+      const inner = data.data
+      // 新消息推送
+      if (inner.type === 'message' && inner.message) {
+        // 转换为前端 MessageType 格式
+        const msg = {
+          fromUser: {
+            uid: inner.message.fromUid || 0,
+            username: inner.message.fromName || '',
+            avatar: inner.message.fromAvatar || ''
+          },
+          message: {
+            id: inner.message.id || 0,
+            sessionId: inner.sessionId || data.sessionId || 0,
+            type: inner.message.type || 0,
+            body: inner.message.body || { content: '' },
+            sendTime: inner.message.sendTime || Date.now(),
+            messageMark: { userLike: 0, userDislike: 0, likeCount: 0, dislikeCount: 0 }
+          },
+          sendTime: new Date(inner.message.sendTime || Date.now()).toLocaleTimeString(),
+          loading: false
+        } as MessageType
+        Mitt.emit(MittEnum.SEND_MESSAGE, msg)
+      }
+      // 会话更新通知（如群组创建、会话列表变更）
+      if (inner.type === 'session_update') {
+        Mitt.emit(MittEnum.UPDATE_UNREAD, inner.data)
+      }
+      return
+    }
+
+    // 兼容旧格式：直接 type === 'message'
     if (data.type === 'message' && data.data) {
       const msg = data.data as MessageType
-      // 通过Mitt事件总线广播消息，供useChat等hook接收
       Mitt.emit(MittEnum.SEND_MESSAGE, msg)
     }
 
     // 会话更新通知
     if (data.type === 'session_update') {
-      // 触发会话列表刷新
       Mitt.emit(MittEnum.UPDATE_UNREAD, data.data)
     }
   }

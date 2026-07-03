@@ -8,6 +8,7 @@ mod user_cmd;
 use init::CustomInit;
 use user_cmd::{
     get_app_version, get_user_info, play_sound, save_user_info, screenshot, set_height,
+    toggle_devtools,
 };
 
 fn main() {
@@ -30,7 +31,8 @@ fn main() {
             set_height,
             screenshot,
             play_sound,
-            get_app_version
+            get_app_version,
+            toggle_devtools
         ])
         .run(tauri::generate_context!())
         .expect("运行 Tauri 应用时发生错误");

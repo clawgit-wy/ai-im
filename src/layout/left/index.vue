@@ -8,14 +8,64 @@
       <p class="text-(16px [--left-text-color]) cursor-default select-none m-[4px_0_16px_0]">AI-IM</p>
 
       <!-- 用户头像区域 -->
-      <div class="relative mb-16px cursor-pointer">
-        <n-avatar :size="36" :src="userInfo.avatar" fallback-src="/logo.png" round />
-        <!-- 在线状态指示器 -->
-        <div
-          class="online-dot"
-          :class="globalStore.onlineStatus === OnlineEnum.ONLINE ? 'online' : 'offline'"
-          @click.stop="handleStatusClick"></div>
-      </div>
+      <n-popover
+        v-model:show="showProfilePopover"
+        trigger="click"
+        placement="right-start"
+        :show-arrow="false"
+        style="padding: 0; background: transparent"
+        raw>
+        <template #trigger>
+          <div class="relative mb-16px cursor-pointer">
+            <n-avatar :size="36" :src="userInfo.avatar" fallback-src="/logo.png" round />
+            <!-- 在线状态指示器 -->
+            <div
+              class="online-dot"
+              :class="globalStore.onlineStatus === OnlineEnum.ONLINE ? 'online' : 'offline'"
+              @click.stop="handleStatusClick"></div>
+          </div>
+        </template>
+        <div class="profile-card" @click.stop>
+          <div class="profile-header">
+            <n-avatar :size="56" :src="userInfo.avatar" fallback-src="/logo.png" round />
+            <div class="profile-name-area">
+              <div class="profile-name">{{ userInfo.name || '未设置' }}</div>
+              <div class="profile-status">
+                <span class="status-dot" :class="globalStore.onlineStatus === OnlineEnum.ONLINE ? 'online' : 'offline'"></span>
+                <span>{{ globalStore.onlineStatus === OnlineEnum.ONLINE ? '在线' : '离线' }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="profile-info">
+            <div class="info-row">
+              <span class="info-label">UID</span>
+              <span class="info-value">{{ userInfo.uid || '-' }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">邮箱</span>
+              <span class="info-value">{{ userInfo.email || '未绑定' }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">手机</span>
+              <span class="info-value">{{ userInfo.phone || '未绑定' }}</span>
+            </div>
+          </div>
+          <div class="profile-actions">
+            <div class="profile-action-item" @click="handleEditProfile">
+              <svg class="size-16px" viewBox="0 0 24 24" fill="none">
+                <path d="M11 4H4C2.89543 4 2 4.89543 2 6V20C2 21.1046 2.89543 22 4 22H18C19.1046 22 20 21.1046 20 20V13M18.4142 2.58579C19.1953 1.80474 20.4617 1.80474 21.2426 2.58579L21.4142 2.75736C22.1953 3.53841 22.1953 4.80474 21.4142 5.58579L12 15L8 16L9 12L18.4142 2.58579Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>编辑资料</span>
+            </div>
+            <div class="profile-action-item danger" @click="handleLogout">
+              <svg class="size-16px" viewBox="0 0 24 24" fill="none">
+                <path d="M9 21H5C4.45 21 4 20.55 4 20V4C4 3.45 4.45 3 5 3H9M16 17L21 12L16 7M21 12H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>退出登录</span>
+            </div>
+          </div>
+        </div>
+      </n-popover>
 
       <!-- 导航菜单 -->
       <nav class="flex-1 flex-col-x-center gap-8px w-full">
@@ -136,18 +186,23 @@
 import { useGlobalStore } from '@/stores/global'
 import { useUserStore } from '@/stores/user'
 import { useSettingStore } from '@/stores/setting'
-import { useWindow } from '@/hooks/useWindow'
 import { OnlineEnum } from '@/enums'
 import router from '@/router'
 
 const globalStore = useGlobalStore()
 const userStore = useUserStore()
 const settingStore = useSettingStore()
-const { createWebviewWindow: _createWebviewWindow } = useWindow()
-// 保留引用供未来扩展使用
-void _createWebviewWindow
 const userInfo = computed(() => userStore.userInfo)
 const { themes, fontSize, windowShadow } = storeToRefs(settingStore)
+
+/** 个人信息弹窗 */
+const showProfilePopover = ref(false)
+
+/** 编辑资料 */
+function handleEditProfile() {
+  showProfilePopover.value = false
+  window.$message?.info('编辑资料功能开发中')
+}
 
 /** 更多菜单是否显示 */
 const moreShow = ref(false)
@@ -283,9 +338,6 @@ function handleLogout() {
     negativeText: '取消',
     onPositiveClick: () => {
       userStore.logout()
-      // 清除所有本地缓存数据
-      localStorage.removeItem('USER_INFO')
-      localStorage.removeItem('TOKEN')
       window.$message?.success('已退出登录')
       // 跳转到登录页
       router.push('/login')
@@ -338,6 +390,124 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .left {
   background: var(--left-bg-color);
+}
+
+/* ========== 个人信息卡片 ========== */
+.profile-card {
+  width: 280px;
+  background: var(--n-color, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  border: 1px solid var(--line-color, #e3e3e3);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 16px;
+  background: linear-gradient(135deg, rgba(19, 152, 127, 0.08), rgba(108, 92, 231, 0.08));
+}
+
+.profile-name-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--n-text-color, #18181c);
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #5c6166;
+
+  :global(html[data-theme='dark']) & {
+    color: #8b93a7;
+  }
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  &.online {
+    background: #34c84a;
+  }
+
+  &.offline {
+    background: #c1c1c1;
+  }
+}
+
+.profile-info {
+  padding: 12px 16px;
+  border-top: 1px solid var(--line-color, #e3e3e3);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.info-label {
+  color: #5c6166;
+  flex-shrink: 0;
+
+  :global(html[data-theme='dark']) & {
+    color: #8b93a7;
+  }
+}
+
+.info-value {
+  color: var(--n-text-color, #18181c);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.profile-actions {
+  padding: 8px;
+  border-top: 1px solid var(--line-color, #e3e3e3);
+}
+
+.profile-action-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--n-text-color, #18181c);
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(99, 99, 99, 0.08);
+  }
+
+  &.danger {
+    color: #d03050;
+    &:hover {
+      background: rgba(208, 48, 80, 0.08);
+    }
+  }
 }
 
 .nav-item {

@@ -172,3 +172,27 @@ pub fn play_sound<R: Runtime>(sound_type: String, app: AppHandle<R>) -> Result<(
 pub fn get_app_version<R: Runtime>(app: AppHandle<R>) -> String {
     app.package_info().version.to_string()
 }
+
+/// 切换 DevTools 开关
+///
+/// 在当前焦点窗口上打开或关闭开发者工具，便于调试。
+/// 仅在 debug 模式或显式启用 devtools 时生效。
+#[tauri::command]
+pub fn toggle_devtools<R: Runtime>(app: AppHandle<R>) -> Result<(), String> {
+    // 优先获取当前焦点窗口，其次回退到 main 窗口
+    let window = app
+        .get_webview_window("main")
+        .or_else(|| {
+            app.webview_windows()
+                .into_values()
+                .find(|w| w.is_focused().unwrap_or(false))
+        })
+        .ok_or_else(|| "未找到可用窗口".to_string())?;
+
+    if window.is_devtools_open() {
+        window.close_devtools();
+    } else {
+        window.open_devtools();
+    }
+    Ok(())
+}

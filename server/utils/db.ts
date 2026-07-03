@@ -264,12 +264,26 @@ function seedData() {
   insertMessage.run(5, 0, '日程机器人', '🤖', 1, '检测到群组已创建，我可以帮大家管理日程安排。', now - 86100000)
   insertMessage.run(5, 4, '小明', '🧑', 1, '需求文档已更新，请查看', now - 172800000)
 
-  // 插入群成员 (会话5)
+  // 插入群成员 (会话5 - 项目团队群)
   const insertMember = db.prepare('INSERT INTO group_members (uid, sessionId, username, avatar, role, onlineStatus, joinTime) VALUES (?, ?, ?, ?, ?, ?, ?)')
   insertMember.run(2, 5, '张三', '👨', 1, 2, now - 86400000)
   insertMember.run(3, 5, '李四', '👩', 2, 1, now - 86400000)
   insertMember.run(4, 5, '小明', '🧑', 3, 1, now - 86400000)
   insertMember.run(1, 5, '我', '👤', 3, 1, now - 86400000)
+
+  // 插入单聊会话成员关系 (会话1-4: AI助手、张三、李四、日程机器人)
+  // 会话1: AI助手 (用户1参与)
+  insertMember.run(1, 1, '我', '👤', 1, 1, now - 86400000)
+  // 会话2: 张三 (用户1与张三的私聊)
+  insertMember.run(1, 2, '我', '👤', 1, 1, now - 86400000)
+  insertMember.run(2, 2, '张三', '👨', 2, 2, now - 86400000)
+  // 会话3: 李四 (用户1与李四的私聊)
+  insertMember.run(1, 3, '我', '👤', 1, 1, now - 86400000)
+  insertMember.run(3, 3, '李四', '👩', 2, 1, now - 86400000)
+  // 会话4: 日程机器人 (用户1参与)
+  insertMember.run(1, 4, '我', '👤', 1, 1, now - 86400000)
+  // 会话6: 技术交流群 (用户1参与)
+  insertMember.run(1, 6, '我', '👤', 3, 1, now - 86400000)
 
   // 插入日程
   const insertSchedule = db.prepare('INSERT INTO schedules (id, title, content, startTime, endTime, allDay, remindTime, type, completed, createTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
