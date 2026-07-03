@@ -1,6 +1,7 @@
 import { ref, reactive, computed } from 'vue'
 import apis from '@/services/apis'
 import { useUserStore } from '@/stores/user'
+import { useRobotStore, WorkflowStatusEnum } from '@/stores/robot'
 import { ChatTypeEnum, MsgEnum, MittEnum } from '@/enums'
 import Mitt from '@/utils/Bus'
 import type { Session, MessageType } from '@/services/types'
@@ -148,6 +149,7 @@ function mapMessage(msg: MessageType, currentUid: number): ChatMessage {
  */
 export function useChat() {
   const userStore = useUserStore()
+  const robotStore = useRobotStore()
 
   /** 对话列表 */
   const chatList = ref<ChatItem[]>([])
@@ -328,6 +330,14 @@ export function useChat() {
       messagesMap[chatId] = []
     }
 
+    // 检查是否为 /robot 指令
+    const robotMatch = content.match(/^\/robot\s+(.+)$/)
+    if (robotMatch) {
+      const robotName = robotMatch[1].trim()
+      await handleRobotCommand(chatId, robotName)
+      return
+    }
+
     try {
       // 调用后端发送消息
       const res = await apis.sendMsg({
@@ -356,6 +366,109 @@ export function useChat() {
       console.error('发送消息失败:', err)
       window.$message?.error('发送失败')
     }
+  }
+
+  /**
+   * 处理 /robot 指令
+   * @param chatId 对话ID
+   * @param robotName 机器人名称
+   */
+  async function handleRobotCommand(chatId: number, robotName: string) {
+    // 确保机器人列表已加载
+    if (robotStore.workflowList.length === 0) {
+      await robotStore.fetchList()
+    }
+
+    const robot = robotStore.findByName(robotName)
+    if (!robot) {
+      // 机器人不存在
+      pushSystemMessage(chatId, `未找到名为「${robotName}」的机器人，请检查名称是否正确。`)
+      return
+    }
+
+    if (robot.status === WorkflowStatusEnum.PENDING) {
+      pushSystemMessage(chatId, `机器人「${robotName}」尚未配置 Dify API Key 和 Endpoint，无法调用。`)
+      return
+    }
+
+    // 发送系统提示消息
+    pushSystemMessage(chatId, `正在调用机器人「${robotName}」，请稍候...`)
+
+    try {
+      // 调用 Dify API
+      const reply = await callDifyWorkflow(robot, '')
+      // 推送机器人回复消息
+      if (!messagesMap[chatId]) messagesMap[chatId] = []
+      messagesMap[chatId].push({
+        id: ++messageIdCounter,
+        sender: 'ai',
+        name: robot.name,
+        avatar: robot.icon,
+        avatarBg: 'linear-gradient(135deg, #00b894, #00cec9)',
+        text: reply || '（机器人无返回内容）',
+        time: formatTime(Date.now()),
+        isAI: true,
+        aiType: 'bot'
+      })
+      // 更新对话列表最后消息
+      const chat = chatList.value.find((c) => c.id === chatId)
+      if (chat) {
+        chat.lastMsg = `${robot.name}: ${reply?.substring(0, 30) || '...'}`
+        chat.time = formatTime(Date.now())
+      }
+    } catch (err) {
+      console.error('调用机器人失败:', err)
+      pushSystemMessage(chatId, `机器人「${robotName}」调用失败：${err instanceof Error ? err.message : '未知错误'}`)
+    }
+  }
+
+  /**
+   * 推送系统消息
+   */
+  function pushSystemMessage(chatId: number, text: string) {
+    if (!messagesMap[chatId]) messagesMap[chatId] = []
+    messagesMap[chatId].push({
+      id: ++messageIdCounter,
+      system: true,
+      sender: 'other',
+      name: '',
+      avatar: '',
+      text,
+      time: formatTime(Date.now())
+    })
+  }
+
+  /**
+   * 调用 Dify 工作流 API
+   * @param robot 机器人配置
+   * @param input 用户输入内容
+   * @returns 机器人回复内容
+   */
+  async function callDifyWorkflow(robot: { apiKey: string; endpoint: string; name: string }, input: string): Promise<string> {
+    const baseUrl = robot.endpoint.replace(/\/$/, '')
+    const url = `${baseUrl}/chat-messages`
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${robot.apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        inputs: {},
+        query: input,
+        response_mode: 'blocking',
+        user: `user_${userStore.userInfo?.uid || 'anonymous'}`
+      })
+    })
+
+    if (!response.ok) {
+      const errText = await response.text().catch(() => '')
+      throw new Error(`Dify API 返回 ${response.status}: ${errText || response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.answer || data.message || '（无返回内容）'
   }
 
   /**

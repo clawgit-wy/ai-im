@@ -357,6 +357,10 @@ export type Workflow = {
   avatar: string
   /** 提示词 */
   prompt: string
+  /** Dify API Key */
+  apiKey: string
+  /** 工作流 Endpoint URL */
+  endpoint: string
   /** 模型配置 */
   modelConfig: {
     /** 模型名称 */
@@ -382,6 +386,10 @@ export type WorkflowReq = {
   avatar: string
   /** 提示词 */
   prompt: string
+  /** Dify API Key */
+  apiKey?: string
+  /** 工作流 Endpoint URL */
+  endpoint?: string
   /** 模型配置 */
   modelConfig: {
     /** 模型名称 */

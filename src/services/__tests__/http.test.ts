@@ -77,7 +77,7 @@ describe('services/http', () => {
       const mockResponse = {
         ok: true,
         status: 200,
-        json: async () => ({ success: true, code: 200, message: 'ok', data: { id: 1 } })
+        text: async () => JSON.stringify({ success: true, code: 200, message: 'ok', data: { id: 1 } })
       }
       mockFetch.mockResolvedValue(mockResponse)
 
@@ -95,7 +95,7 @@ describe('services/http', () => {
       const mockResponse = {
         ok: true,
         status: 200,
-        json: async () => ({ success: true, code: 200, message: 'ok', data: {} })
+        text: async () => JSON.stringify({ success: true, code: 200, message: 'ok', data: {} })
       }
       mockFetch.mockResolvedValue(mockResponse)
 
@@ -113,7 +113,7 @@ describe('services/http', () => {
       const mockResponse = {
         ok: true,
         status: 200,
-        json: async () => ({ success: true, code: 200, message: 'ok', data: {} })
+        text: async () => JSON.stringify({ success: true, code: 200, message: 'ok', data: {} })
       }
       mockFetch.mockResolvedValue(mockResponse)
 
@@ -127,7 +127,7 @@ describe('services/http', () => {
       const mockResponse = {
         ok: true,
         status: 200,
-        json: async () => ({ success: true, code: 200, message: 'ok', data: {} })
+        text: async () => JSON.stringify({ success: true, code: 200, message: 'ok', data: {} })
       }
       mockFetch.mockResolvedValue(mockResponse)
 
@@ -141,7 +141,7 @@ describe('services/http', () => {
       const mockResponse = {
         ok: true,
         status: 200,
-        json: async () => ({ success: true, code: 200, message: 'ok', data: {} })
+        text: async () => JSON.stringify({ success: true, code: 200, message: 'ok', data: {} })
       }
       mockFetch.mockResolvedValue(mockResponse)
 
@@ -151,8 +151,8 @@ describe('services/http', () => {
       })
 
       const fetchOptions = mockFetch.mock.calls[0][1] as RequestInit
-      const headers = fetchOptions.headers as Headers
-      expect(headers.get('Authorization')).toBe('Bearer token123')
+      const headers = fetchOptions.headers as Record<string, string>
+      expect(headers['Authorization']).toBe('Bearer token123')
     })
 
     it('isBlob 为 true 时应返回 ArrayBuffer', async () => {
@@ -161,7 +161,7 @@ describe('services/http', () => {
         ok: true,
         status: 200,
         arrayBuffer: async () => arrayBuffer,
-        json: async () => ({ success: true, code: 200, message: 'ok', data: {} })
+        text: async () => JSON.stringify({ success: true, code: 200, message: 'ok', data: {} })
       }
       mockFetch.mockResolvedValue(mockResponse)
 
@@ -179,7 +179,7 @@ describe('services/http', () => {
       const mockResponse = {
         ok: false,
         status: 404,
-        json: async () => ({ success: false, code: 404, message: 'Not Found', data: null })
+        text: async () => JSON.stringify({ success: false, code: 404, message: 'Not Found', data: null })
       }
       mockFetch.mockResolvedValue(mockResponse)
 

@@ -34,14 +34,15 @@ export interface WorkflowItem {
 
 /** 后端 Workflow → 本地 WorkflowItem */
 function mapWorkflow(w: Workflow): WorkflowItem {
+  const hasConfig = !!(w.apiKey && w.endpoint)
   return {
     id: w.id,
     name: w.name,
     description: w.description,
     icon: w.avatar || '🤖',
-    apiKey: (w as any).apiKey || '',
-    endpoint: (w as any).endpoint || '',
-    status: w.enabled ? WorkflowStatusEnum.RUNNING : WorkflowStatusEnum.PENDING
+    apiKey: w.apiKey || '',
+    endpoint: w.endpoint || '',
+    status: w.enabled ? WorkflowStatusEnum.RUNNING : (hasConfig ? WorkflowStatusEnum.CONFIGURED : WorkflowStatusEnum.PENDING)
   }
 }
 
@@ -67,15 +68,22 @@ export const useRobotStore = defineStore(StoresEnum.ROBOT, () => {
    */
   async function createWorkflow(workflow: Omit<WorkflowItem, 'id' | 'status'> & { status?: WorkflowStatusEnum }) {
     try {
+      const hasConfig = !!(workflow.apiKey && workflow.endpoint)
       const res = await apis.createWorkflow({
         name: workflow.name,
         description: workflow.description,
         avatar: workflow.icon || '🤖',
         prompt: '',
+        apiKey: workflow.apiKey || '',
+        endpoint: workflow.endpoint || '',
         modelConfig: { model: 'dify', temperature: 0.7, maxTokens: 2048 },
         enabled: workflow.status === WorkflowStatusEnum.RUNNING
       })
       const item = mapWorkflow(res)
+      // 如果创建时未指定状态但已填写配置，标记为已配置
+      if (!workflow.status && hasConfig) {
+        item.status = WorkflowStatusEnum.CONFIGURED
+      }
       workflowList.value.push(item)
       return item
     } catch (err) {
@@ -97,6 +105,8 @@ export const useRobotStore = defineStore(StoresEnum.ROBOT, () => {
         description: data.description || '',
         avatar: data.icon || '🤖',
         prompt: '',
+        apiKey: data.apiKey || '',
+        endpoint: data.endpoint || '',
         modelConfig: { model: 'dify', temperature: 0.7, maxTokens: 2048 },
         enabled: data.status === WorkflowStatusEnum.RUNNING
       })
@@ -126,20 +136,72 @@ export const useRobotStore = defineStore(StoresEnum.ROBOT, () => {
   }
 
   /**
-   * 打开工作流（标记为运行中）
+   * 启动工作流（标记为运行中）
    * @param id 工作流ID
    */
-  function openWorkflow(id: number) {
+  function startWorkflow(id: number) {
     const workflow = workflowList.value.find((w) => w.id === id)
     if (workflow) {
       if (workflow.status === WorkflowStatusEnum.PENDING) {
-        window.$message.warning('请先配置工作流')
+        window.$message.warning('请先配置工作流的 Dify API Key 和 Endpoint')
         return false
       }
       workflow.status = WorkflowStatusEnum.RUNNING
+      // 同步到后端
+      apis.updateWorkflow({
+        id,
+        name: workflow.name,
+        description: workflow.description,
+        avatar: workflow.icon,
+        prompt: '',
+        apiKey: workflow.apiKey,
+        endpoint: workflow.endpoint,
+        modelConfig: { model: 'dify', temperature: 0.7, maxTokens: 2048 },
+        enabled: true
+      }).catch(() => {})
       return true
     }
     return false
+  }
+
+  /**
+   * 停止工作流（标记为已配置）
+   * @param id 工作流ID
+   */
+  function stopWorkflow(id: number) {
+    const workflow = workflowList.value.find((w) => w.id === id)
+    if (workflow) {
+      workflow.status = WorkflowStatusEnum.CONFIGURED
+      // 同步到后端
+      apis.updateWorkflow({
+        id,
+        name: workflow.name,
+        description: workflow.description,
+        avatar: workflow.icon,
+        prompt: '',
+        apiKey: workflow.apiKey,
+        endpoint: workflow.endpoint,
+        modelConfig: { model: 'dify', temperature: 0.7, maxTokens: 2048 },
+        enabled: false
+      }).catch(() => {})
+      return true
+    }
+    return false
+  }
+
+  /**
+   * 打开工作流（兼容旧接口，内部调用 startWorkflow）
+   */
+  function openWorkflow(id: number) {
+    return startWorkflow(id)
+  }
+
+  /**
+   * 根据名称查找工作流
+   * @param name 机器人名称
+   */
+  function findByName(name: string): WorkflowItem | undefined {
+    return workflowList.value.find((w) => w.name === name)
   }
 
   return {
@@ -148,6 +210,9 @@ export const useRobotStore = defineStore(StoresEnum.ROBOT, () => {
     createWorkflow,
     updateWorkflow,
     deleteWorkflow,
-    openWorkflow
+    startWorkflow,
+    stopWorkflow,
+    openWorkflow,
+    findByName
   }
 })

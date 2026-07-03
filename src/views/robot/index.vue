@@ -1,72 +1,60 @@
 <template>
-  <div class="size-full flex overflow-hidden">
-    <!-- 左侧列表栏 -->
-    <div class="center-panel flex flex-col border-r-1 border-[--line-color]">
-      <!-- 搜索栏 -->
-      <div class="search-bar flex items-center gap-8px">
-        <n-input v-model:value="searchKeyword" placeholder="搜索机器人..." clearable size="small" class="flex-1" />
-      </div>
-
-      <!-- 列表区域 -->
-      <n-scrollbar class="flex-1">
-        <div
-          v-for="item in filteredWorkflowList"
-          :key="item.id"
-          :class="['list-item', { active: activeRobotId === item.id }]"
-          @click="activeRobotId = item.id">
-          <div class="list-avatar flex-center">{{ item.icon }}</div>
-          <div class="list-content flex-1 min-w-0">
-            <div class="list-title">{{ item.name }}</div>
-            <div class="list-subtitle">{{ item.description }}</div>
-          </div>
-        </div>
-      </n-scrollbar>
-    </div>
-
-    <!-- 右侧内容区 -->
-    <div class="right-panel flex-1 flex flex-col min-w-0">
-      <!-- 内容头部 -->
-      <div class="content-header flex-between-center">
-        <div class="content-title-area flex items-center gap-8px">
-          <div class="list-avatar flex-center" style="width: 36px; height: 36px">🤖</div>
-          <div>
-            <div class="content-title">机器人工作流</div>
-            <div class="content-subtitle">Dify智能流程</div>
-          </div>
-        </div>
-        <div class="content-actions flex gap-8px">
-          <button class="action-btn" @click="openCreateModal" title="创建工作流">+</button>
-          <button class="action-btn" @click="showWorkflowSettings" title="设置">⚙</button>
+  <div class="size-full flex flex-col overflow-hidden">
+    <!-- 内容头部 -->
+    <div class="content-header flex-between-center">
+      <div class="content-title-area flex items-center gap-8px">
+        <div class="header-avatar flex-center">🤖</div>
+        <div>
+          <div class="content-title">机器人工作流</div>
+          <div class="content-subtitle">Dify智能流程</div>
         </div>
       </div>
+      <div class="header-actions flex items-center gap-8px">
+        <n-input v-model:value="searchKeyword" placeholder="搜索机器人..." clearable size="small" class="search-input" />
+        <button class="action-btn" @click="openCreateModal" title="新增机器人">+</button>
+        <button class="action-btn" @click="showWorkflowSettings" title="设置">⚙</button>
+      </div>
+    </div>
 
-      <!-- 工作流卡片网格 -->
-      <n-scrollbar class="flex-1">
-        <div class="robot-container">
-          <div class="robot-workflows">
-            <div
-              v-for="item in filteredWorkflowList"
-              :key="item.id"
-              class="workflow-card"
-              @click="handleOpenWorkflow(item)">
-              <div class="workflow-icon flex-center">{{ item.icon }}</div>
-              <div class="workflow-name">{{ item.name }}</div>
-              <div class="workflow-desc">{{ item.description }}</div>
-              <span :class="['workflow-badge', `workflow-badge--${item.status}`]">
-                {{ statusText(item.status) }}
-              </span>
-            </div>
+    <!-- 工作流卡片网格 -->
+    <n-scrollbar class="flex-1">
+      <div class="robot-container">
+        <div class="robot-workflows">
+          <div
+            v-for="item in filteredWorkflowList"
+            :key="item.id"
+            class="workflow-card"
+            @click="handleCardClick(item)"
+            @contextmenu.prevent="handleContextMenu($event, item)">
+            <!-- 状态徽章 -->
+            <span :class="['workflow-badge', `workflow-badge--${item.status}`]">
+              {{ statusText(item.status) }}
+            </span>
+            <div class="workflow-icon flex-center">{{ item.icon }}</div>
+            <div class="workflow-name">{{ item.name }}</div>
+            <div class="workflow-desc">{{ item.description }}</div>
+          </div>
 
-            <!-- 创建新工作流卡片 -->
-            <div class="workflow-card workflow-card--create" @click="openCreateModal">
-              <div class="workflow-icon workflow-icon--create flex-center">+</div>
-              <div class="workflow-name">创建新工作流</div>
-              <div class="workflow-desc">自定义Dify工作流程</div>
-            </div>
+          <!-- 创建新工作流卡片 -->
+          <div class="workflow-card workflow-card--create" @click="openCreateModal">
+            <div class="workflow-icon workflow-icon--create flex-center">+</div>
+            <div class="workflow-name">创建新工作流</div>
+            <div class="workflow-desc">自定义Dify工作流程</div>
           </div>
         </div>
-      </n-scrollbar>
-    </div>
+      </div>
+    </n-scrollbar>
+
+    <!-- 右键菜单 -->
+    <n-dropdown
+      placement="bottom-start"
+      trigger="manual"
+      :x="contextMenuX"
+      :y="contextMenuY"
+      :options="contextMenuOptions"
+      :show="showContextMenu"
+      :on-clickoutside="closeContextMenu"
+      @select="handleContextMenuSelect" />
 
     <!-- 创建工作流弹窗 -->
     <n-modal
@@ -157,6 +145,52 @@
         </div>
       </template>
     </n-modal>
+
+    <!-- 工作流详情弹窗 -->
+    <n-modal
+      v-model:show="showDetailModal"
+      preset="card"
+      :title="`${detailWorkflow?.name || '工作流'} 详情`"
+      style="width: 460px"
+      :bordered="false">
+      <div class="detail-list">
+        <div class="detail-item">
+          <span class="detail-label">名称</span>
+          <span class="detail-value">{{ detailWorkflow?.name || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">描述</span>
+          <span class="detail-value">{{ detailWorkflow?.description || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">图标</span>
+          <span class="detail-value">{{ detailWorkflow?.icon || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">API Key</span>
+          <span class="detail-value">{{ maskApiKey(detailWorkflow?.apiKey || '') }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Endpoint</span>
+          <span class="detail-value">{{ detailWorkflow?.endpoint || '—' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">状态</span>
+          <span :class="['detail-badge', `workflow-badge--${detailWorkflow?.status}`]">
+            {{ statusText(detailWorkflow?.status) }}
+          </span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">创建时间</span>
+          <span class="detail-value">—</span>
+        </div>
+      </div>
+      <template #footer>
+        <div class="flex justify-end">
+          <n-button @click="showDetailModal = false">关闭</n-button>
+        </div>
+      </template>
+    </n-modal>
   </div>
 </template>
 
@@ -172,8 +206,6 @@ onMounted(() => {
 
 /** 搜索关键词 */
 const searchKeyword = ref('')
-/** 当前选中的机器人ID */
-const activeRobotId = ref<number>(robotStore.workflowList[0]?.id || 0)
 
 /** 创建弹窗 */
 const showCreateModal = ref(false)
@@ -181,6 +213,8 @@ const showCreateModal = ref(false)
 const showConfigModal = ref(false)
 /** 设置弹窗 */
 const showSettingsModal = ref(false)
+/** 详情弹窗 */
+const showDetailModal = ref(false)
 
 /** 创建表单 */
 const createForm = reactive({
@@ -202,11 +236,20 @@ const configForm = reactive({
   icon: ''
 })
 
+/** 详情中的工作流 */
+const detailWorkflow = ref<WorkflowItem | null>(null)
+
 /** 设置表单 */
 const settingsForm = reactive({
   apiKey: '',
   endpoint: ''
 })
+
+/** 右键菜单状态 */
+const showContextMenu = ref(false)
+const contextMenuX = ref(0)
+const contextMenuY = ref(0)
+const contextMenuWorkflow = ref<WorkflowItem | null>(null)
 
 /** 过滤后的工作流列表 */
 const filteredWorkflowList = computed(() => {
@@ -216,14 +259,34 @@ const filteredWorkflowList = computed(() => {
   )
 })
 
+/** 右键菜单选项 */
+const contextMenuOptions = computed(() => {
+  if (!contextMenuWorkflow.value) return []
+  const isRunning = contextMenuWorkflow.value.status === WorkflowStatusEnum.RUNNING
+  return [
+    { label: '编辑', key: 'edit', disabled: isRunning },
+    { label: isRunning ? '停止' : '启动', key: 'toggle' },
+    { label: '详情', key: 'detail' },
+    { label: '删除', key: 'delete' }
+  ]
+})
+
 /** 状态文本 */
-function statusText(status: WorkflowStatusEnum) {
+function statusText(status?: WorkflowStatusEnum) {
+  if (!status) return '—'
   const map: Record<WorkflowStatusEnum, string> = {
     [WorkflowStatusEnum.RUNNING]: '运行中',
     [WorkflowStatusEnum.PENDING]: '待配置',
     [WorkflowStatusEnum.CONFIGURED]: '已配置'
   }
   return map[status]
+}
+
+/** API Key 脱敏显示 */
+function maskApiKey(key: string) {
+  if (!key) return '—'
+  if (key.length <= 8) return '****'
+  return key.slice(0, 4) + '****' + key.slice(-4)
 }
 
 /** 打开创建弹窗 */
@@ -247,23 +310,29 @@ function handleCreate() {
   showCreateModal.value = false
 }
 
-/** 打开工作流 */
-function handleOpenWorkflow(item: WorkflowItem) {
+/** 卡片点击处理 */
+function handleCardClick(item: WorkflowItem) {
   if (item.status === WorkflowStatusEnum.PENDING) {
-    // 打开配置弹窗
-    configWorkflow.value = item
-    configForm.name = item.name
-    configForm.description = item.description
-    configForm.apiKey = item.apiKey
-    configForm.endpoint = item.endpoint
-    configForm.icon = item.icon
-    showConfigModal.value = true
-  } else {
-    const success = robotStore.openWorkflow(item.id)
+    openConfigModal(item)
+  } else if (item.status === WorkflowStatusEnum.CONFIGURED) {
+    const success = robotStore.startWorkflow(item.id)
     if (success) {
       window.$message.success(`${item.name} 已启动`)
     }
+  } else if (item.status === WorkflowStatusEnum.RUNNING) {
+    window.$message.warning('机器人运行中，请先停止再编辑')
   }
+}
+
+/** 打开配置弹窗 */
+function openConfigModal(item: WorkflowItem) {
+  configWorkflow.value = item
+  configForm.name = item.name
+  configForm.description = item.description
+  configForm.apiKey = item.apiKey
+  configForm.endpoint = item.endpoint
+  configForm.icon = item.icon
+  showConfigModal.value = true
 }
 
 /** 保存配置 */
@@ -306,91 +375,73 @@ function handleSaveSettings() {
   window.$message.success('设置已保存')
   showSettingsModal.value = false
 }
+
+/** 右键菜单触发 */
+function handleContextMenu(e: MouseEvent, item: WorkflowItem) {
+  contextMenuWorkflow.value = item
+  contextMenuX.value = e.clientX
+  contextMenuY.value = e.clientY
+  showContextMenu.value = true
+}
+
+/** 关闭右键菜单 */
+function closeContextMenu() {
+  showContextMenu.value = false
+}
+
+/** 右键菜单选择处理 */
+function handleContextMenuSelect(key: string) {
+  const workflow = contextMenuWorkflow.value
+  if (!workflow) return
+  showContextMenu.value = false
+
+  switch (key) {
+    case 'edit':
+      if (workflow.status === WorkflowStatusEnum.RUNNING) {
+        window.$message.warning('运行中无法编辑')
+        return
+      }
+      openConfigModal(workflow)
+      break
+    case 'toggle':
+      if (workflow.status === WorkflowStatusEnum.RUNNING) {
+        robotStore.stopWorkflow(workflow.id)
+        window.$message.success(`${workflow.name} 已停止`)
+      } else {
+        const success = robotStore.startWorkflow(workflow.id)
+        if (success) {
+          window.$message.success(`${workflow.name} 已启动`)
+        }
+      }
+      break
+    case 'detail':
+      detailWorkflow.value = workflow
+      showDetailModal.value = true
+      break
+    case 'delete':
+      robotStore.deleteWorkflow(workflow.id)
+      window.$message.success('工作流已删除')
+      break
+  }
+}
 </script>
 
 <style scoped>
-.center-panel {
-  width: 250px;
-  min-width: 160px;
-  max-width: 300px;
-  background: var(--center-bg-color, #fff);
-}
-
-.search-bar {
-  padding: 16px 12px;
+.content-header {
+  padding: 16px 20px;
   border-bottom: 1px solid var(--line-color, #e3e3e3);
+  background: var(--n-base-color, #fff);
 }
 
-.add-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  background: var(--n-tertiary-color, #f0f0f0);
-  border: none;
-  color: var(--n-text-color, #18181c);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
-}
-.add-btn:hover {
-  background: #13987f;
-  color: #fff;
-}
-
-.list-item {
-  display: flex;
-  align-items: center;
-  padding: 12px;
-  cursor: pointer;
-  gap: 8px;
-  position: relative;
-  transition: background 0.2s ease;
-}
-.list-item:hover {
-  background: var(--list-hover-color, rgba(99, 99, 99, 0.1));
-}
-.list-item.active {
-  background: var(--bg-msg-hover, #f3f3f3);
-}
-
-.list-avatar {
-  width: 40px;
-  height: 40px;
+.header-avatar {
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   background: linear-gradient(135deg, #00b894, #00cec9);
   font-size: 18px;
   flex-shrink: 0;
 }
 
-.list-content {
-  min-width: 0;
-}
-.list-title {
-  font-size: 13px;
-  color: var(--n-text-color, #18181c);
-  margin-bottom: 3px;
-}
-.list-subtitle {
-  font-size: 11px;
-  color: var(--n-text-color-3, #5c6166);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.right-panel {
-  background: var(--right-bg-color, #f1f1f1);
-}
-
-.content-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--line-color, #e3e3e3);
-  background: var(--n-base-color, #fff);
-}
 .content-title {
   font-size: 16px;
   font-weight: 500;
@@ -399,6 +450,15 @@ function handleSaveSettings() {
 .content-subtitle {
   font-size: 12px;
   color: var(--n-text-color-3, #5c6166);
+}
+
+.header-actions {
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.search-input {
+  width: 240px;
 }
 
 .action-btn {
@@ -414,6 +474,7 @@ function handleSaveSettings() {
   justify-content: center;
   font-size: 16px;
   transition: all 0.2s ease;
+  flex-shrink: 0;
 }
 .action-btn:hover {
   background: var(--bg-msg-hover, #f3f3f3);
@@ -431,6 +492,7 @@ function handleSaveSettings() {
 }
 
 .workflow-card {
+  position: relative;
   background: var(--n-base-color, #fff);
   border-radius: 12px;
   padding: 16px;
@@ -473,11 +535,13 @@ function handleSaveSettings() {
 }
 
 .workflow-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
   display: inline-block;
   padding: 3px 8px;
   border-radius: 3px;
   font-size: 10px;
-  margin-top: 12px;
 }
 .workflow-badge--running {
   background: rgba(24, 160, 88, 0.12);
@@ -490,5 +554,34 @@ function handleSaveSettings() {
 .workflow-badge--configured {
   background: rgba(32, 128, 240, 0.12);
   color: #2080f0;
+}
+
+/* 详情弹窗 */
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.detail-label {
+  width: 80px;
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--n-text-color-3, #5c6166);
+}
+.detail-value {
+  font-size: 13px;
+  color: var(--n-text-color, #18181c);
+  word-break: break-all;
+}
+.detail-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 3px;
+  font-size: 10px;
 }
 </style>

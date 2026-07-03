@@ -9,7 +9,7 @@
       <!-- 窗口操作栏 -->
       <ActionBar />
       <!-- 内容区域：路由视图（padding-top 避免被 ActionBar 遮挡） -->
-      <div class="flex-1 overflow-hidden" style="padding-top: 28px">
+      <div class="flex-1 overflow-hidden" style="padding-top: 28px;background-color: var(--center-bg-color);">
         <router-view />
       </div>
     </main>
